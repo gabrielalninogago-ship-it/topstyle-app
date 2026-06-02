@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <!-- viewport: hace que la página se adapte al ancho del celular (mobile-first) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TopStyle App — En construcción</title>
+  <style>
+    /* Estilos mínimos solo para que el "hola mundo" se vea prolijo.
+       Esto NO es el diseño de la app, es un placeholder del Paso 1. */
+    :root {
+      --plum: #5a2a4d;
+      --blush: #fcf6fa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--blush);
+      color: var(--plum);
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 { font-size: 1.8rem; margin: 0; }
+    p { margin: 0; color: #6b4a60; }
+    .deploy {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #9a7a8e;
+      font-variant-numeric: tabular-nums;
+    }
+    .deploy strong { color: var(--plum); }
+  </style>
+</head>
+<body>
+  <h1>TopStyle App</h1>
+  <p>En construcción 🚧</p>
+
+  <!-- DEPLOY-MARKER: esta línea se actualiza a mano en cada push.
+       Sirve para verificar visualmente que Netlify re-deployó.
+       Si la fecha de abajo cambió en la URL pública tras un push,
+       el deploy automático funciona. -->
+  <p class="deploy">Último deploy: <strong>2026-06-02 22:53</strong></p>
+</body>
+</html>

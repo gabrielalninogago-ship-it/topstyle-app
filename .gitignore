@@ -1,0 +1,26 @@
+# Dependencias (por si en algún momento sumamos tooling local con npm)
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos del editor
+.vscode/
+.idea/
+*.swp
+
+# Marcadores de zona de Windows (los que aparecen como *.Zone.Identifier)
+*:Zone.Identifier
+
+# Carpeta local de Netlify (estado del CLI, no va al repo)
+.netlify/
+
+# Variables de entorno (no aplica hoy porque no hay backend, pero por las dudas)
+.env
+.env.local

@@ -1,0 +1,9 @@
+# netlify.toml: archivo de configuración que Netlify lee al deployar.
+# Lo dejamos mínimo porque el sitio es estático puro (no hay build step).
+#
+# [build] publish = "." le dice a Netlify que la raíz del repo ES lo que
+# se publica (ahí vive index.html). Sin esto Netlify igual lo adivina,
+# pero dejarlo explícito evita sorpresas más adelante.
+
+[build]
+  publish = "."
