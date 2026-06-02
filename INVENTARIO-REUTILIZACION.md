@@ -99,27 +99,87 @@ Dentro hay:
 
 ---
 
-## Piezas a revisar con Gabb antes de construir
+## Decisiones revisadas con Gabb
 
-> Marcadas porque tocan decisiones de diseño/alcance, no las decido yo.
+> Estado al 2026-06-02 tras la revisión del inventario.
 
-- **REVISAR-1 — Taxonomía de tabs del catálogo.** Handoff usa
-  *Coloración · Intelligent · Styling · Pileta(Salón)*. PRD §4.2 sugiere
-  *Todos · Question Coloración · Tratamientos · Styling · Q-Style · Beauty Color*.
-  Hay que definir la lista final (y si "Beauty Color" entra, hoy el catálogo es
-  todo Question). Impacta `product_lines.json` (A2) y los tabs (B4).
+- **REVISAR-1 — Taxonomía de tabs del catálogo → CERRADO PARCIAL.**
+  Beauty Color **sí entra** al MVP, pero solo una parte de productos
+  **no-coloración** (la lista exacta la define Gabb antes del Paso 3, ver
+  REVISAR-7). Taxonomía base de tabs:
+  *Todos · Question Coloración · Intelligent Series · Styling · Q-Style · Beauty Color*.
+  Nombres finales a confirmar al armar el catálogo (Paso 3). Impacta
+  `product_lines.json` (A2) y los tabs (B4).
 
-- **REVISAR-2 — ¿Alpine o JS vanilla aislado para el modal?** La lógica del modal
-  (B1) es la pieza más cara y hoy es JS vanilla con manipulación directa del DOM.
-  Portarla a Alpine es más trabajo y más riesgo de romperla; dejarla como módulo
-  vanilla aislado dentro de la app Alpine es más seguro pero mezcla dos estilos.
-  Decisión técnica a tomar cuando lleguemos al Paso 6.
+- **REVISAR-2 — Alpine vs vanilla para el modal → CERRADO.**
+  El modal (B1) queda en **JS vanilla aislado**, NO se porta a Alpine. La
+  interfaz con la app Alpine es una función pegamento tipo
+  `openColorPicker(productId, onSelect)`, donde el callback `onSelect` recibe
+  los tonos seleccionados. Así el modal vive autocontenido y la app Alpine solo
+  lo invoca y recibe el resultado.
 
-- **REVISAR-3 — ¿Modal rico o simple?** El modal del handoff tiene multi-select +
-  cantidad por tono + toggle "1 tono / varios". El PRD §4.3 lo describe más simple
-  ("click selecciona y agrega"). Como el modal es la pieza que se nos pidió NO
-  rehacer, la opción de menor esfuerzo es reusar el rico. Confirmar si está bien
-  o si querés simplificarlo.
+- **REVISAR-3 — Modal rico vs simple → CERRADO.**
+  Se mantiene el **modal rico**: multi-select + cantidad por tono + toggle
+  "1 tono / varios". Es la mejor UX para la peluquera que pide varios tonos.
+  Pendiente de cierre del proyecto (no urge): actualizar el PRD §4.3 para que
+  describa este comportamiento real.
+
+- **REVISAR-4 — Estructura de carpetas → PROPUESTA (ver sección siguiente).**
+  Propuesta formal abajo. **Gabb la aprueba antes de crear archivos en el Paso 2.**
+
+- **REVISAR-5 — Imágenes de productos → CERRADO.**
+  Las fotos se **duplican en `/assets/productos/` del repo**. En el Paso 3
+  (catálogo) traigo las imágenes de los 72 productos Question. Las de Beauty
+  Color las agrega Gabb más adelante, junto con su lista de productos (REVISAR-7).
+
+- **REVISAR-6 — PDFs → CERRADO.**
+  Se hospedan en `/assets/pdfs/` del repo. Cuatro archivos que Gabb pasa más
+  adelante: (1) Catálogo Question (lista de precios), (2) Catálogo Beauty Color,
+  (3) Carta de color Question Coloration, (4) Carta Lumiplex. **Mientras no
+  estén**, los links del footer en Inicio van como **placeholders deshabilitados
+  con texto "(próximamente)"**. Cuando lleguen, se completan las URLs y se
+  habilitan.
+
+- **REVISAR-7 — Lista final de Beauty Color para MVP → ABIERTO.**
+  Solo productos no-coloración, "una parte" según Gabb. No bloquea hasta el
+  Paso 3. Se resuelve con Gabb antes de armar el catálogo.
+
+---
+
+## Estructura de carpetas propuesta (REVISAR-4)
+
+> Pendiente de OK de Gabb antes de crear archivos en el Paso 2.
+
+```
+topstyle-app/
+├── index.html                    ← app (las 3 pantallas viven acá, ver nota SPA)
+├── css/
+│   └── styles.css                ← estilos propios de la app
+├── js/
+│   ├── app.js                    ← lógica Alpine de la app (carrito, navegación, form)
+│   └── color-modal.js            ← modal de tono, JS vanilla aislado (Paso 6)
+├── data/
+│   ├── catalogo.json             ← 72 productos, sin precios (Paso 3)
+│   ├── paletas.json              ← Coloration 109 + Lumiplex 35 (Paso 6)
+│   ├── product_lines.json        ← mapeo línea → prefijos (Paso 3)
+│   └── promos.json               ← banners de Inicio (Paso 11)
+├── assets/
+│   ├── topstyle-logo.png         ← logo sobre fondo claro
+│   ├── productos/                ← fotos de productos (Paso 3)
+│   └── pdfs/                     ← 4 PDFs, cuando los pase Gabb (REVISAR-6)
+├── icons/                        ← íconos PWA (Paso 12)
+├── netlify.toml
+├── README.md
+└── INVENTARIO-REUTILIZACION.md
+```
+
+**Nota SPA (decisión a confirmar con la estructura):** propongo que las 3
+pantallas (Inicio, Catálogo, Carrito) vivan en **un solo `index.html`** y se
+alternen con Alpine (`x-show` según una variable de estado tipo `pantalla`), en
+vez de 3 archivos HTML separados. Razón: la app comparte estado (carrito,
+nombre, datos del cliente) entre pantallas; con un solo archivo no se pierde nada
+al "navegar", no hay recarga, y encaja mejor con PWA. El contra: el `index.html`
+crece. Para el tamaño de esta app (3 pantallas) es manejable.
 
 ---
 
