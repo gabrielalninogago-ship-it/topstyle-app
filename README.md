@@ -23,7 +23,8 @@ El detalle funcional completo vive en el PRD:
 
 - **Netlify**, deploy automático conectado a este repo de GitHub.
 - Cada push a la rama principal redeploya solo en 1-2 minutos.
-- URL pública (Netlify): _pendiente, se completa cuando Gabb conecte el repo._
+- URL pública (Netlify): **https://cheery-paletas-012cd9.netlify.app**
+- Panel de administración: https://app.netlify.com/projects/cheery-paletas-012cd9
 
 Para verificar que un deploy se actualizó: el `index.html` muestra
 "Último deploy: <fecha>". Esa fecha se edita a mano en cada push; si cambia
