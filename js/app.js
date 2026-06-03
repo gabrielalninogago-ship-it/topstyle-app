@@ -55,15 +55,30 @@ document.addEventListener('alpine:init', () => {
     _buscarItem(id, code) {
       return this.carrito.find(i => i.id === id && (i.variant ? i.variant.code : null) === code);
     },
-    agregar(producto, variant = null) {
+    agregar(producto, variant = null, qty = 1, silencioso = false) {
       const code = variant ? variant.code : null;
       const existente = this._buscarItem(producto.id, code);
-      if (existente) {
-        existente.qty += 1;
-      } else {
-        this.carrito.push(variant ? { id: producto.id, qty: 1, variant } : { id: producto.id, qty: 1 });
-      }
-      this.mostrarToast(`${producto.nombre} agregado`);
+      if (existente) existente.qty += qty;
+      else this.carrito.push(variant ? { id: producto.id, qty, variant } : { id: producto.id, qty });
+      if (!silencioso) this.mostrarToast(`${producto.nombre} agregado`);
+    },
+    // Abre el modal de tono (módulo vanilla js/color-modal.js) y agrega al
+    // carrito los tonos que el cliente elija. Pieza pegamento de REVISAR-2.
+    abrirTono(producto) {
+      if (!window.openColorPicker) return;
+      window.openColorPicker(
+        { line: producto.lineaVariante, label: producto.nombre },
+        (seleccion) => {
+          if (!seleccion || !seleccion.length) return;
+          let total = 0;
+          seleccion.forEach(s => {
+            this.agregar(producto, { code: s.code, name: s.name, hex: s.hex, line: s.line }, s.qty, true);
+            total += s.qty;
+          });
+          const txt = seleccion.length === 1 ? `tono ${seleccion[0].code}` : `${seleccion.length} tonos`;
+          this.mostrarToast(`${producto.nombre}: ${txt} (${total} u.)`);
+        }
+      );
     },
     quitar(id, code = null) {
       this.carrito = this.carrito.filter(i => !(i.id === id && (i.variant ? i.variant.code : null) === code));

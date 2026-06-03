@@ -1,0 +1,879 @@
+{
+  "source": "Hex muestreados directamente de las fotos de los color books oficiales Question (Coloration 2025 + Lumiplex 2026) + boost asimétrico para vibración + enforcement de jerarquía monotónica L por familia.",
+  "coloration": {
+    "count": 109,
+    "product_id": "coloration-full-plex-60g",
+    "tones": [
+      {
+        "code": "1",
+        "name": "Negro",
+        "family": "Naturales",
+        "hex": "#252420"
+      },
+      {
+        "code": "3",
+        "name": "Castaño oscuro",
+        "family": "Naturales",
+        "hex": "#36281e"
+      },
+      {
+        "code": "4",
+        "name": "Castaño",
+        "family": "Naturales",
+        "hex": "#442b20"
+      },
+      {
+        "code": "5",
+        "name": "Castaño claro",
+        "family": "Naturales",
+        "hex": "#4c3127"
+      },
+      {
+        "code": "6",
+        "name": "Rubio oscuro",
+        "family": "Naturales",
+        "hex": "#825a39"
+      },
+      {
+        "code": "7",
+        "name": "Rubio",
+        "family": "Naturales",
+        "hex": "#8e623c"
+      },
+      {
+        "code": "8",
+        "name": "Rubio claro",
+        "family": "Naturales",
+        "hex": "#9b6f46"
+      },
+      {
+        "code": "9",
+        "name": "Rubio muy claro",
+        "family": "Naturales",
+        "hex": "#b1946b"
+      },
+      {
+        "code": "6NC",
+        "name": "Rubio oscuro cálido",
+        "family": "Naturales Cálidos",
+        "hex": "#68372b"
+      },
+      {
+        "code": "7NC",
+        "name": "Rubio cálido",
+        "family": "Naturales Cálidos",
+        "hex": "#773d2b"
+      },
+      {
+        "code": "8NC",
+        "name": "Rubio claro cálido",
+        "family": "Naturales Cálidos",
+        "hex": "#905235"
+      },
+      {
+        "code": "9NC",
+        "name": "Rubio muy claro cálido",
+        "family": "Naturales Cálidos",
+        "hex": "#ad6d45"
+      },
+      {
+        "code": "5/00",
+        "name": "Castaño claro profundo",
+        "family": "Naturales Profundos",
+        "hex": "#422828"
+      },
+      {
+        "code": "6/00",
+        "name": "Rubio oscuro profundo",
+        "family": "Naturales Profundos",
+        "hex": "#502f2b"
+      },
+      {
+        "code": "7/00",
+        "name": "Rubio profundo",
+        "family": "Naturales Profundos",
+        "hex": "#653b32"
+      },
+      {
+        "code": "8/00",
+        "name": "Rubio claro profundo",
+        "family": "Naturales Profundos",
+        "hex": "#734536"
+      },
+      {
+        "code": "9/00",
+        "name": "Rubio muy claro profundo",
+        "family": "Naturales Profundos",
+        "hex": "#825542"
+      },
+      {
+        "code": "5.07",
+        "name": "Castaño claro natural frío",
+        "family": "Naturales Metalizados",
+        "hex": "#413024"
+      },
+      {
+        "code": "6.07",
+        "name": "Rubio oscuro natural frío",
+        "family": "Naturales Metalizados",
+        "hex": "#4c3c29"
+      },
+      {
+        "code": "7.07",
+        "name": "Rubio natural frío",
+        "family": "Naturales Metalizados",
+        "hex": "#674f32"
+      },
+      {
+        "code": "8.07",
+        "name": "Rubio claro natural frío",
+        "family": "Naturales Metalizados",
+        "hex": "#7e6241"
+      },
+      {
+        "code": "5.1",
+        "name": "Castaño claro ceniza",
+        "family": "Cenizas",
+        "hex": "#39221a"
+      },
+      {
+        "code": "6.1",
+        "name": "Rubio oscuro ceniza",
+        "family": "Cenizas",
+        "hex": "#462e28"
+      },
+      {
+        "code": "7.1",
+        "name": "Rubio ceniza",
+        "family": "Cenizas",
+        "hex": "#5f4034"
+      },
+      {
+        "code": "8.1",
+        "name": "Rubio claro ceniza",
+        "family": "Cenizas",
+        "hex": "#6a4a3c"
+      },
+      {
+        "code": "9.1",
+        "name": "Rubio muy claro ceniza",
+        "family": "Cenizas",
+        "hex": "#8e6c5a"
+      },
+      {
+        "code": "6.11",
+        "name": "Rubio oscuro irisado",
+        "family": "Cenizas Irisados",
+        "hex": "#3e2628"
+      },
+      {
+        "code": "7.11",
+        "name": "Rubio irisado",
+        "family": "Cenizas Irisados",
+        "hex": "#604642"
+      },
+      {
+        "code": "8.11",
+        "name": "Rubio claro irisado",
+        "family": "Cenizas Irisados",
+        "hex": "#705651"
+      },
+      {
+        "code": "9.11",
+        "name": "Rubio muy claro irisado",
+        "family": "Cenizas Irisados",
+        "hex": "#806560"
+      },
+      {
+        "code": "9.10",
+        "name": "Pearl Ice",
+        "family": "Tonos Fríos",
+        "hex": "#a79f9e"
+      },
+      {
+        "code": "7.17",
+        "name": "Lead Ice",
+        "family": "Tonos Fríos",
+        "hex": "#694f4c"
+      },
+      {
+        "code": "10.21",
+        "name": "Lilac Ice",
+        "family": "Tonos Fríos",
+        "hex": "#b8afb3"
+      },
+      {
+        "code": "10.51",
+        "name": "Rosé Ice",
+        "family": "Tonos Fríos",
+        "hex": "#bf938b"
+      },
+      {
+        "code": "5.53",
+        "name": "Castaño claro chocolate",
+        "family": "Chocolates",
+        "hex": "#40180b"
+      },
+      {
+        "code": "6.53",
+        "name": "Rubio oscuro chocolate",
+        "family": "Chocolates",
+        "hex": "#4c2114"
+      },
+      {
+        "code": "7.53",
+        "name": "Rubio chocolate",
+        "family": "Chocolates",
+        "hex": "#713b23"
+      },
+      {
+        "code": "6.23",
+        "name": "Rubio oscuro marrón profundo",
+        "family": "Marrones Fríos",
+        "hex": "#3d2619"
+      },
+      {
+        "code": "7.23",
+        "name": "Rubio marrón profundo",
+        "family": "Marrones Fríos",
+        "hex": "#512c24"
+      },
+      {
+        "code": "5.35",
+        "name": "Castaño claro dorado caoba",
+        "family": "Marrones Cálidos",
+        "hex": "#532514"
+      },
+      {
+        "code": "6.35",
+        "name": "Rubio oscuro dorado caoba",
+        "family": "Marrones Cálidos",
+        "hex": "#612514"
+      },
+      {
+        "code": "7.35",
+        "name": "Rubio dorado caoba",
+        "family": "Marrones Cálidos",
+        "hex": "#7c391b"
+      },
+      {
+        "code": "7CM",
+        "name": "Rubio caramel",
+        "family": "Marrones Caramel",
+        "hex": "#99411d"
+      },
+      {
+        "code": "8CM",
+        "name": "Rubio claro caramel",
+        "family": "Marrones Caramel",
+        "hex": "#b95427"
+      },
+      {
+        "code": "6.52",
+        "name": "Rubio oscuro tabaco",
+        "family": "Tabacos",
+        "hex": "#4d2516"
+      },
+      {
+        "code": "7.52",
+        "name": "Rubio tabaco",
+        "family": "Tabacos",
+        "hex": "#8a4620"
+      },
+      {
+        "code": "8.52",
+        "name": "Rubio claro tabaco",
+        "family": "Tabacos",
+        "hex": "#a35532"
+      },
+      {
+        "code": "5ME",
+        "name": "Castaño claro marrón elemental",
+        "family": "Marrones Elementales",
+        "hex": "#45201d"
+      },
+      {
+        "code": "6ME",
+        "name": "Rubio oscuro marrón elemental",
+        "family": "Marrones Elementales",
+        "hex": "#5a2b24"
+      },
+      {
+        "code": "7ME",
+        "name": "Rubio marrón elemental",
+        "family": "Marrones Elementales",
+        "hex": "#804331"
+      },
+      {
+        "code": "8ME",
+        "name": "Rubio claro marrón elemental",
+        "family": "Marrones Elementales",
+        "hex": "#894e37"
+      },
+      {
+        "code": "5MK",
+        "name": "Castaño claro moka mousse",
+        "family": "Moka",
+        "hex": "#462b26"
+      },
+      {
+        "code": "6MK",
+        "name": "Rubio oscuro moka mousse",
+        "family": "Moka",
+        "hex": "#513229"
+      },
+      {
+        "code": "7AV",
+        "name": "Rubio avellana",
+        "family": "Avellana",
+        "hex": "#905339"
+      },
+      {
+        "code": "8AV",
+        "name": "Rubio claro avellana",
+        "family": "Avellana",
+        "hex": "#a56a42"
+      },
+      {
+        "code": "5.3",
+        "name": "Castaño claro dorado",
+        "family": "Dorados",
+        "hex": "#49200d"
+      },
+      {
+        "code": "6.3",
+        "name": "Rubio oscuro dorado",
+        "family": "Dorados",
+        "hex": "#5a2a1e"
+      },
+      {
+        "code": "7.3",
+        "name": "Rubio dorado",
+        "family": "Dorados",
+        "hex": "#a55531"
+      },
+      {
+        "code": "8.3",
+        "name": "Rubio claro dorado",
+        "family": "Dorados",
+        "hex": "#b9713d"
+      },
+      {
+        "code": "9.3",
+        "name": "Rubio muy claro dorado",
+        "family": "Dorados",
+        "hex": "#c7a76f"
+      },
+      {
+        "code": "6.31",
+        "name": "Rubio oscuro dorado beige",
+        "family": "Dorados Beige",
+        "hex": "#583020"
+      },
+      {
+        "code": "7.31",
+        "name": "Rubio dorado beige",
+        "family": "Dorados Beige",
+        "hex": "#804b2f"
+      },
+      {
+        "code": "8.31",
+        "name": "Rubio claro dorado beige",
+        "family": "Dorados Beige",
+        "hex": "#ac6f45"
+      },
+      {
+        "code": "9.31",
+        "name": "Rubio muy claro dorado ceniza",
+        "family": "Dorados Beige",
+        "hex": "#bd8144"
+      },
+      {
+        "code": "10.31",
+        "name": "Rubio extra claro dorado ceniza",
+        "family": "Dorados Beige",
+        "hex": "#ccaf6f"
+      },
+      {
+        "code": "9.13",
+        "name": "Rubio muy claro beige",
+        "family": "Dorados Beige",
+        "hex": "#b28654"
+      },
+      {
+        "code": "10.13",
+        "name": "Rubio extra claro beige",
+        "family": "Dorados Beige",
+        "hex": "#c4ae7c"
+      },
+      {
+        "code": "7.32",
+        "name": "Rubio dorado miel",
+        "family": "Dorados Miel",
+        "hex": "#824f32"
+      },
+      {
+        "code": "8.32",
+        "name": "Rubio claro dorado miel",
+        "family": "Dorados Miel",
+        "hex": "#b2733e"
+      },
+      {
+        "code": "9.32",
+        "name": "Rubio muy claro dorado miel",
+        "family": "Dorados Miel",
+        "hex": "#b98544"
+      },
+      {
+        "code": "10.32",
+        "name": "Rubio extra claro dorado miel",
+        "family": "Dorados Miel",
+        "hex": "#c19e6d"
+      },
+      {
+        "code": "8.30",
+        "name": "Rubio claro dorado intenso",
+        "family": "Dorados Intensos",
+        "hex": "#d19435"
+      },
+      {
+        "code": "9.33",
+        "name": "Rubio muy claro dorado profundo",
+        "family": "Dorados Intensos",
+        "hex": "#d1a654"
+      },
+      {
+        "code": "6.45",
+        "name": "Rubio oscuro cobrizo caoba",
+        "family": "Cobres",
+        "hex": "#562222"
+      },
+      {
+        "code": "7.46",
+        "name": "Rubio cobrizo rojizo",
+        "family": "Cobres",
+        "hex": "#99301f"
+      },
+      {
+        "code": "7.40",
+        "name": "Rubio cobrizo intenso",
+        "family": "Cobres",
+        "hex": "#d8381b"
+      },
+      {
+        "code": "8.43",
+        "name": "Rubio claro cobrizo dorado",
+        "family": "Cobres",
+        "hex": "#d15330"
+      },
+      {
+        "code": "8.34",
+        "name": "Rubio claro dorado cobrizo",
+        "family": "Cobres",
+        "hex": "#ae4c22"
+      },
+      {
+        "code": "9.34",
+        "name": "Rubio muy claro dorado cobrizo",
+        "family": "Cobres",
+        "hex": "#b95529"
+      },
+      {
+        "code": "7.46V",
+        "name": "Rubio cobrizo rojizo vibrante",
+        "family": "Cobrizos Vibrantes",
+        "hex": "#a21a0f"
+      },
+      {
+        "code": "8.43V",
+        "name": "Rubio claro cobrizo dorado vibrante",
+        "family": "Cobrizos Vibrantes",
+        "hex": "#e3480e"
+      },
+      {
+        "code": "5.65",
+        "name": "Castaño claro rojizo caoba",
+        "family": "Rojos",
+        "hex": "#5f0c17"
+      },
+      {
+        "code": "6.66",
+        "name": "Rubio oscuro rojizo profundo",
+        "family": "Rojos",
+        "hex": "#6a101a"
+      },
+      {
+        "code": "7.65",
+        "name": "Rubio rojizo caoba",
+        "family": "Rojos",
+        "hex": "#8f2839"
+      },
+      {
+        "code": "7.62",
+        "name": "Rubio rojizo malva",
+        "family": "Rojos",
+        "hex": "#86303d"
+      },
+      {
+        "code": "6.64",
+        "name": "Rubio oscuro rojizo cobrizo",
+        "family": "Rojos Intensos",
+        "hex": "#8e0c12"
+      },
+      {
+        "code": "7.64",
+        "name": "Rubio rojizo cobrizo",
+        "family": "Rojos Intensos",
+        "hex": "#a32020"
+      },
+      {
+        "code": "5.6",
+        "name": "Castaño claro caoba",
+        "family": "Caobas",
+        "hex": "#4a1818"
+      },
+      {
+        "code": "6.6",
+        "name": "Rubio oscuro caoba",
+        "family": "Caobas",
+        "hex": "#5b1a1e"
+      },
+      {
+        "code": "5.20",
+        "name": "Castaño claro violeta intenso",
+        "family": "Violáceos",
+        "hex": "#330b1d"
+      },
+      {
+        "code": "5.62",
+        "name": "Castaño claro rojizo violeta",
+        "family": "Violáceos",
+        "hex": "#3f0d18"
+      },
+      {
+        "code": "5.22",
+        "name": "Castaño claro violeta profundo",
+        "family": "Violáceos",
+        "hex": "#3f0a32"
+      },
+      {
+        "code": "7.2",
+        "name": "Rubio malva",
+        "family": "Malvas",
+        "hex": "#623a3b"
+      },
+      {
+        "code": "8.2",
+        "name": "Rubio claro malva",
+        "family": "Malvas",
+        "hex": "#764b46"
+      },
+      {
+        "code": "9.2",
+        "name": "Rubio muy claro malva",
+        "family": "Malvas",
+        "hex": "#8d655b"
+      },
+      {
+        "code": "10",
+        "name": "Rubio extra claro",
+        "family": "Aclarantes",
+        "hex": "#d2cdba"
+      },
+      {
+        "code": "10.1",
+        "name": "Rubio extra claro ceniza",
+        "family": "Aclarantes",
+        "hex": "#c0b5aa"
+      },
+      {
+        "code": "10.2",
+        "name": "Rubio extra claro malva",
+        "family": "Aclarantes",
+        "hex": "#bcb0b6"
+      },
+      {
+        "code": "900",
+        "name": "Súper aclarante neutro",
+        "family": "Súper Aclarantes",
+        "hex": "#d2d0cc"
+      },
+      {
+        "code": "901",
+        "name": "Súper aclarante ceniza",
+        "family": "Súper Aclarantes",
+        "hex": "#dcd8d0"
+      },
+      {
+        "code": "912",
+        "name": "Súper aclarante ceniza malva",
+        "family": "Súper Aclarantes",
+        "hex": "#c7bdc3"
+      },
+      {
+        "code": "901S+",
+        "name": "Max súper aclarante ceniza",
+        "family": "Súper Aclarantes",
+        "hex": "#ada393"
+      },
+      {
+        "code": "902S+",
+        "name": "Max súper aclarante ceniza malva",
+        "family": "Súper Aclarantes",
+        "hex": "#c1b0bc"
+      },
+      {
+        "code": "Azul",
+        "name": "Azul",
+        "family": "Mix Correctores",
+        "hex": "#21267b"
+      },
+      {
+        "code": "Plata",
+        "name": "Plata",
+        "family": "Mix Correctores",
+        "hex": "#aba6b4"
+      },
+      {
+        "code": "Verde Mate",
+        "name": "Verde Mate",
+        "family": "Mix Correctores",
+        "hex": "#524c19"
+      },
+      {
+        "code": "Violeta",
+        "name": "Violeta",
+        "family": "Mix Correctores",
+        "hex": "#3f1b61"
+      },
+      {
+        "code": "Rojo",
+        "name": "Rojo",
+        "family": "Mix Correctores",
+        "hex": "#c00100"
+      },
+      {
+        "code": "Dorado",
+        "name": "Dorado",
+        "family": "Mix Correctores",
+        "hex": "#dd922b"
+      }
+    ]
+  },
+  "lumiplex": {
+    "count": 35,
+    "product_id": "lumiplex-color-60g",
+    "tones": [
+      {
+        "code": "1",
+        "name": "Negro",
+        "family": "Naturales",
+        "hex": "#21201e"
+      },
+      {
+        "code": "4",
+        "name": "Castaño",
+        "family": "Naturales",
+        "hex": "#32211c"
+      },
+      {
+        "code": "5",
+        "name": "Castaño claro",
+        "family": "Naturales",
+        "hex": "#4c2312"
+      },
+      {
+        "code": "6",
+        "name": "Rubio oscuro",
+        "family": "Naturales",
+        "hex": "#6f4e36"
+      },
+      {
+        "code": "7",
+        "name": "Rubio",
+        "family": "Naturales",
+        "hex": "#7e5437"
+      },
+      {
+        "code": "8",
+        "name": "Rubio claro",
+        "family": "Naturales",
+        "hex": "#c2b4ac"
+      },
+      {
+        "code": "9",
+        "name": "Rubio muy claro",
+        "family": "Naturales",
+        "hex": "#cabcb2"
+      },
+      {
+        "code": "7.21",
+        "name": "Rubio malva ceniza",
+        "family": "Perlados",
+        "hex": "#5c3b3d"
+      },
+      {
+        "code": "8.21",
+        "name": "Rubio claro malva ceniza",
+        "family": "Perlados",
+        "hex": "#764c4b"
+      },
+      {
+        "code": "9.21",
+        "name": "Rubio muy claro malva ceniza",
+        "family": "Perlados",
+        "hex": "#946365"
+      },
+      {
+        "code": "10.21",
+        "name": "Rubio extra claro malva ceniza",
+        "family": "Perlados",
+        "hex": "#b9aeb2"
+      },
+      {
+        "code": "8.10",
+        "name": "Rubio claro perla metalizado",
+        "family": "Perlados",
+        "hex": "#787270"
+      },
+      {
+        "code": "10.10",
+        "name": "Rubio extra claro perla",
+        "family": "Perlados",
+        "hex": "#ad9b97"
+      },
+      {
+        "code": "5.3",
+        "name": "Castaño claro dorado",
+        "family": "Dorados",
+        "hex": "#492317"
+      },
+      {
+        "code": "6.3",
+        "name": "Rubio oscuro dorado",
+        "family": "Dorados",
+        "hex": "#5b2e24"
+      },
+      {
+        "code": "7.3",
+        "name": "Rubio dorado",
+        "family": "Dorados",
+        "hex": "#9f5433"
+      },
+      {
+        "code": "8.3",
+        "name": "Rubio claro dorado",
+        "family": "Dorados",
+        "hex": "#b46f3d"
+      },
+      {
+        "code": "9.3",
+        "name": "Rubio muy claro dorado",
+        "family": "Dorados",
+        "hex": "#c3a16a"
+      },
+      {
+        "code": "7.32",
+        "name": "Rubio dorado miel",
+        "family": "Dorados",
+        "hex": "#7e4f33"
+      },
+      {
+        "code": "8.32",
+        "name": "Rubio claro dorado miel",
+        "family": "Dorados",
+        "hex": "#ae7343"
+      },
+      {
+        "code": "9.32",
+        "name": "Rubio muy claro dorado miel",
+        "family": "Dorados",
+        "hex": "#b37f46"
+      },
+      {
+        "code": "10.13",
+        "name": "Rubio extra claro beige",
+        "family": "Dorados",
+        "hex": "#c7af80"
+      },
+      {
+        "code": "9.31",
+        "name": "Rubio muy claro dorado beige",
+        "family": "Dorados",
+        "hex": "#bf894b"
+      },
+      {
+        "code": "10.31",
+        "name": "Rubio extra claro dorado beige",
+        "family": "Dorados",
+        "hex": "#d0b075"
+      },
+      {
+        "code": "5.1",
+        "name": "Castaño claro ceniza",
+        "family": "Cenizas",
+        "hex": "#39221a"
+      },
+      {
+        "code": "6.1",
+        "name": "Rubio oscuro ceniza",
+        "family": "Cenizas",
+        "hex": "#452e28"
+      },
+      {
+        "code": "7.1",
+        "name": "Rubio ceniza",
+        "family": "Cenizas",
+        "hex": "#644439"
+      },
+      {
+        "code": "8.1",
+        "name": "Rubio claro ceniza",
+        "family": "Cenizas",
+        "hex": "#6c4f42"
+      },
+      {
+        "code": "7.46",
+        "name": "Rubio cobrizo rojizo",
+        "family": "Cobrizos",
+        "hex": "#a22119"
+      },
+      {
+        "code": "8.43",
+        "name": "Rubio claro cobrizo dorado",
+        "family": "Cobrizos",
+        "hex": "#e0471a"
+      },
+      {
+        "code": "6.53",
+        "name": "Rubio oscuro chocolate",
+        "family": "Marrones",
+        "hex": "#54271c"
+      },
+      {
+        "code": "7.8",
+        "name": "Rubio marrón neutro",
+        "family": "Marrones",
+        "hex": "#804433"
+      },
+      {
+        "code": "8.53",
+        "name": "Rubio claro chocolate",
+        "family": "Marrones",
+        "hex": "#8a5638"
+      },
+      {
+        "code": "10.53",
+        "name": "Rubio extra claro chocolate",
+        "family": "Marrones",
+        "hex": "#ad8f6f"
+      },
+      {
+        "code": "5.65",
+        "name": "Castaño claro rojizo caoba",
+        "family": "Rojizos",
+        "hex": "#51211b"
+      }
+    ]
+  }
+}

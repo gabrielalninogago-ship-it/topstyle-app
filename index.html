@@ -13,6 +13,8 @@
        componente 'app' escuchando el evento alpine:init, que Alpine dispara
        al arrancar. Ambos con 'defer', así que se ejecutan en orden. -->
   <script defer src="js/app.js"></script>
+  <!-- Modal de tono: módulo vanilla aislado (no usa Alpine) -->
+  <script defer src="js/color-modal.js"></script>
   <!-- Alpine.js por CDN -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
 </head>
@@ -64,7 +66,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 5 · build 2026-06-03 01:35</p>
+      <p class="version">Paso 6 · build 2026-06-03 01:55</p>
     </main>
   </div>
 
@@ -131,9 +133,8 @@
                 </div>
                 <button class="card__add"
                         :class="{ 'card__add--tono': p.requiereVariante }"
-                        :disabled="p.requiereVariante"
-                        @click="!p.requiereVariante && agregar(p)"
-                        :title="p.requiereVariante ? 'Elegí el tono (próximamente)' : 'Agregar al pedido'"
+                        @click="p.requiereVariante ? abrirTono(p) : agregar(p)"
+                        :title="p.requiereVariante ? 'Elegí el tono' : 'Agregar al pedido'"
                         x-text="p.requiereVariante ? 'Elegir tono' : '+'"></button>
               </article>
             </template>
@@ -164,6 +165,58 @@
          x-text="cantidadTotal + (cantidadTotal === 1 ? ' producto' : ' productos') + ' en el pedido. Se construye en el próximo paso.'"></p>
       <button class="btn-volver" @click="pantalla = 'catalogo'">← Seguir agregando</button>
     </main>
+  </div>
+
+  <!-- ===================================================
+       MODAL DE SELECCIÓN DE TONO (vanilla, ver js/color-modal.js)
+       Sin directivas de Alpine: el módulo lo maneja por IDs.
+       =================================================== -->
+  <div class="color-modal-bg" id="colorModalBg" role="dialog" aria-modal="true"
+       aria-labelledby="colorModalTitle" aria-hidden="true">
+    <div class="color-modal">
+      <div class="color-modal__head">
+        <div class="color-modal__title">
+          <small id="colorModalEyebrow">Tono</small>
+          <h3 id="colorModalTitle">Elegí tu tono</h3>
+        </div>
+        <div class="color-mode-toggle" id="colorModeToggle" role="tablist" aria-label="Modo de selección">
+          <button class="is-active" data-mode="multi" role="tab" aria-selected="true">Varios tonos</button>
+          <button data-mode="single" role="tab" aria-selected="false">1 tono</button>
+        </div>
+        <button class="color-modal__close" id="colorModalClose" aria-label="Cerrar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="color-modal__body">
+        <div class="color-toolbar">
+          <div class="color-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="colorSearch" placeholder="Buscá por número o nombre — ej: 7.4, rubio, ceniza" autocomplete="off" />
+          </div>
+          <div class="color-families" id="colorFamilies"></div>
+        </div>
+        <div class="color-grid" id="colorGrid"></div>
+      </div>
+
+      <div class="color-selected-panel">
+        <div class="color-selected-panel__title">
+          <span id="colorSelectedLabel">Tonos seleccionados</span>
+        </div>
+        <div class="color-selected-list" id="colorSelectedList">
+          <div class="color-selected-empty">Tocá uno o más tonos.</div>
+        </div>
+      </div>
+
+      <div class="color-modal__foot">
+        <button class="btn btn--ghost" id="colorCancelBtn" type="button">Cancelar</button>
+        <button class="btn btn--primary" id="colorAddBtn" type="button" disabled>Agregar al pedido</button>
+      </div>
+    </div>
   </div>
 
   <!-- Toast de feedback al agregar -->

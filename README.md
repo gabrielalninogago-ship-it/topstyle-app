@@ -17,7 +17,7 @@ El detalle funcional completo vive en el PRD:
 
 ## Estado
 
-🚧 **En construcción.** Paso 5: Agregar al carrito (contador + Ver pedido).
+🚧 **En construcción.** Paso 6: Modal de selección de tono (Coloration / Lumiplex).
 
 ## Hosting
 
