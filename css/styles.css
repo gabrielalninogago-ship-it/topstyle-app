@@ -278,17 +278,30 @@ body {
 /* Inerte en el Paso 3: se ve apagado a propósito. Se activa en el Paso 4. */
 .cat-buscador:disabled { color: var(--texto-tenue); cursor: not-allowed; }
 
-/* ----- Tabs (scroll horizontal). Inertes en este paso. ----- */
-.cat-tabs {
+/* ----- Tabs (scroll horizontal con degradado a la derecha) ----- */
+/* El wrapper queda sticky y dibuja el degradado; adentro, .cat-tabs scrollea. */
+.cat-tabs-wrap {
   position: sticky;
   top: 56px;                 /* debajo del header */
   z-index: 19;
+  background: var(--fondo);
+  border-bottom: 1px solid var(--linea);
+}
+/* Degradado en el borde derecho: pista visual de que hay más tabs al deslizar. */
+.cat-tabs-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 30px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), var(--fondo));
+  pointer-events: none;
+}
+
+.cat-tabs {
   display: flex;
   gap: 0.4rem;
   padding: 0.6rem 1rem;
   overflow-x: auto;
-  background: var(--fondo);
-  border-bottom: 1px solid var(--linea);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -309,6 +322,30 @@ body {
 .cat-tab.is-active {
   color: #fff;
   background: var(--plum);
+}
+
+/* ----- Sub-tabs de Beauty Color: como los tabs pero NO sticky ----- */
+.cat-subtabs-wrap {
+  position: relative;        /* anula el sticky heredado, mantiene el degradado */
+  top: auto;
+  z-index: auto;
+  border-bottom: none;
+  margin-bottom: 0.3rem;
+}
+.cat-subtab {
+  font-size: 0.8rem;
+  background: #f7eef4;
+}
+.cat-subtab.is-active {
+  color: #fff;
+  background: var(--plum);
+}
+
+/* ----- Estado vacío (búsqueda sin coincidencias) ----- */
+.cat-vacio {
+  text-align: center;
+  color: var(--texto-suave);
+  padding: 2.5rem 1rem;
 }
 
 /* ----- Cuerpo con las secciones ----- */

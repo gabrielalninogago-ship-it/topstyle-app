@@ -17,7 +17,7 @@ El detalle funcional completo vive en el PRD:
 
 ## Estado
 
-🚧 **En construcción.** Paso 3: Catálogo (Pantalla 2), render del grid.
+🚧 **En construcción.** Paso 4: Catálogo con búsqueda y filtros por tab.
 
 ## Hosting
 

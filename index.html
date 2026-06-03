@@ -64,7 +64,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 3 · build 2026-06-03 01:10</p>
+      <p class="version">Paso 4 · build 2026-06-03 01:20</p>
     </main>
   </div>
 
@@ -79,72 +79,65 @@
     <!-- Header sticky: volver + buscador (inerte por ahora) -->
     <header class="cat-header">
       <button class="cat-volver" @click="pantalla = 'inicio'" aria-label="Volver al inicio">←</button>
-      <input class="cat-buscador" type="search" placeholder="Buscar producto…" disabled
-             aria-label="Buscar (se activa en el próximo paso)" />
+      <input class="cat-buscador" type="search" placeholder="Buscar producto…"
+             x-model="busqueda" aria-label="Buscar producto" />
     </header>
 
-    <!-- Tabs principales (inertes en este paso) -->
-    <nav class="cat-tabs" aria-label="Líneas de producto">
-      <template x-for="t in tabs" :key="t.key">
-        <button class="cat-tab" :class="{ 'is-active': tabActivo === t.key }"
-                x-text="t.label"></button>
-      </template>
-    </nav>
+    <!-- Tabs principales. El wrapper agrega un degradado a la derecha para
+         que se note que la fila se puede deslizar (hay más tabs). -->
+    <div class="cat-tabs-wrap">
+      <nav class="cat-tabs" aria-label="Líneas de producto">
+        <template x-for="t in tabs" :key="t.key">
+          <button class="cat-tab"
+                  :class="{ 'is-active': !hayBusqueda && tabActivo === t.key }"
+                  @click="seleccionarTab(t.key)"
+                  x-text="t.label"></button>
+        </template>
+      </nav>
+    </div>
 
-    <!-- Cuerpo: secciones por línea -->
+    <!-- Cuerpo del catálogo -->
     <div class="cat-body">
-      <template x-for="linea in lineas" :key="linea.key">
-        <section class="cat-seccion">
-          <h2 class="cat-seccion__titulo" x-text="linea.label"></h2>
 
-          <!-- Beauty Color: agrupado en sub-líneas -->
-          <template x-if="linea.key === 'beautycolor'">
-            <div>
-              <template x-for="sub in subBeauty" :key="sub">
-                <div class="cat-sub">
-                  <h3 class="cat-sub__titulo" x-text="sub"></h3>
-                  <div class="cat-grid">
-                    <template x-for="p in productosDeSublinea(sub)" :key="p.id">
-                      <article class="card">
-                        <div class="card__foto">
-                          <img :src="p.imagen" :alt="p.nombre" loading="lazy" />
-                        </div>
-                        <div class="card__info">
-                          <p class="card__nombre" x-text="p.nombre"></p>
-                          <p class="card__marca" x-text="p.marca"></p>
-                        </div>
-                        <button class="card__add" disabled
-                                :class="{ 'card__add--tono': p.requiereVariante }"
-                                x-text="p.requiereVariante ? 'Elegir tono' : '+'"></button>
-                      </article>
-                    </template>
-                  </div>
+      <!-- Sub-tabs de Beauty Color (solo con ese tab activo y sin búsqueda) -->
+      <div class="cat-tabs-wrap cat-subtabs-wrap"
+           x-show="!hayBusqueda && tabActivo === 'beautycolor'" x-cloak>
+        <nav class="cat-tabs cat-subtabs" aria-label="Sub-líneas de Beauty Color">
+          <button class="cat-tab cat-subtab" :class="{ 'is-active': subActivo === 'todos' }"
+                  @click="subActivo = 'todos'">Todos</button>
+          <template x-for="sub in subBeauty" :key="sub">
+            <button class="cat-tab cat-subtab" :class="{ 'is-active': subActivo === sub }"
+                    @click="subActivo = sub" x-text="sub"></button>
+          </template>
+        </nav>
+      </div>
+
+      <!-- Estado vacío (búsqueda sin coincidencias) -->
+      <p class="cat-vacio" x-show="sinResultados" x-cloak>No hay productos que coincidan.</p>
+
+      <!-- Grupos: un solo molde de card sirve para búsqueda, tab y sub-tab -->
+      <template x-for="g in gruposVisibles" :key="g.titulo">
+        <section class="cat-seccion" x-show="g.productos.length">
+          <h2 class="cat-seccion__titulo" x-text="g.titulo"></h2>
+          <div class="cat-grid">
+            <template x-for="p in g.productos" :key="p.id">
+              <article class="card">
+                <div class="card__foto">
+                  <img :src="p.imagen" :alt="p.nombre" loading="lazy" />
                 </div>
-              </template>
-            </div>
-          </template>
-
-          <!-- Resto de líneas: grid directo -->
-          <template x-if="linea.key !== 'beautycolor'">
-            <div class="cat-grid">
-              <template x-for="p in productosDeLinea(linea.key)" :key="p.id">
-                <article class="card">
-                  <div class="card__foto">
-                    <img :src="p.imagen" :alt="p.nombre" loading="lazy" />
-                  </div>
-                  <div class="card__info">
-                    <p class="card__nombre" x-text="p.nombre"></p>
-                    <p class="card__marca" x-text="p.marca"></p>
-                  </div>
-                  <button class="card__add" disabled
-                          :class="{ 'card__add--tono': p.requiereVariante }"
-                          x-text="p.requiereVariante ? 'Elegir tono' : '+'"></button>
-                </article>
-              </template>
-            </div>
-          </template>
+                <div class="card__info">
+                  <p class="card__nombre" x-text="p.nombre"></p>
+                  <p class="card__marca" x-text="p.marca"></p>
+                </div>
+                <button class="card__add" disabled
+                        :class="{ 'card__add--tono': p.requiereVariante }"
+                        x-text="p.requiereVariante ? 'Elegir tono' : '+'"></button>
+              </article>
+            </template>
+          </div>
         </section>
       </template>
+
     </div>
 
     <!-- Footer fijo: contador + ver pedido (inertes, Paso 5/7) -->
