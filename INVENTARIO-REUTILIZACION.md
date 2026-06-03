@@ -140,9 +140,39 @@ Dentro hay:
   con texto "(próximamente)"**. Cuando lleguen, se completan las URLs y se
   habilitan.
 
-- **REVISAR-7 — Lista final de Beauty Color para MVP → ABIERTO.**
-  Solo productos no-coloración, "una parte" según Gabb. No bloquea hasta el
-  Paso 3. Se resuelve con Gabb antes de armar el catálogo.
+- **REVISAR-7 — Lista final de Beauty Color para MVP → CERRADO.**
+  27 productos no-coloración, agrupados en sub-tabs dentro del tab "Beauty Color".
+  Fotos: las pasa Gabb más adelante; hasta entonces, placeholders.
+
+  **Máscaras 250 GRS (6):** MC01 Keratina · MC02 Argán · MC03 Ácida ·
+  MC04 Coco y Almendras · MC05 Macadamia · MC06 Semi di Lino.
+
+  **Crema de Peinar 160 ML (3):** CP01 Keratina · CP02 Argán · CP03 Semi di Lino.
+
+  **Lluvias 200 ML (6):** LL01 Keratina · LL02 Argan · LL03 Oro Líquido ·
+  LL04 Oro Verde · LL05 Coco y Almendras · LL06 Semi di Lino.
+
+  **Shampoo 370 ML (5):** SH01 Keratina · SH02 Neutro · SH03 Ácido ·
+  SH04 Oro Líquido · SH05 Argan.
+
+  **Acondicionador 370 ML (4):** AC-01 Keratina · AC-02 Ácido ·
+  AC-03 Oro Líquido · AC-04 Argán.
+  _(En la planilla original había dos AC-04 — Oro Líquido y Argán —; corregido
+  a AC-03 / AC-04.)_
+
+  **Shampoo 900 ML (1):** SHG-01 Neutro.
+
+  **Oxidantes (2):** OX1-20 20 vol. 900cc · OXG-30 30 vol. 900cc.
+
+  **Sub-tabs (7 líneas).** Si en pantalla queda engorroso (sub-tabs con 1-2
+  productos), proponer consolidación (ej: juntar Shampoo 370 + 900 en un
+  sub-tab "Shampoo") y validar con Gabb antes de cerrar el Paso 3.
+
+- **REVISAR-1 — Tabs principales → CERRADO.**
+  *Todos · Question Coloración · Intelligent Series · Styling · Q-Style ·
+  Beauty Color* (este último con los 7 sub-tabs de arriba). Nombres exactos se
+  ajustan a la nomenclatura del `catalogo.json` viejo si difiere, manteniendo
+  coherencia con `product_lines.json`.
 
 ---
 
