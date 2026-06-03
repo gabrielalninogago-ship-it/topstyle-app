@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300" role="img" aria-label="Foto próximamente">
+  <rect width="300" height="300" fill="#f4eef2"/>
+  <g fill="none" stroke="#cdbcc7" stroke-width="6">
+    <rect x="110" y="70" width="80" height="150" rx="14"/>
+    <rect x="128" y="48" width="44" height="26" rx="6"/>
+  </g>
+  <text x="150" y="258" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" fill="#9c8f98">TopStyle</text>
+</svg>

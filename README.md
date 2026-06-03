@@ -17,7 +17,7 @@ El detalle funcional completo vive en el PRD:
 
 ## Estado
 
-🚧 **En construcción.** Paso 2: Pantalla 1 (Inicio), versión "primera visita".
+🚧 **En construcción.** Paso 3: Catálogo (Pantalla 2), render del grid.
 
 ## Hosting
 

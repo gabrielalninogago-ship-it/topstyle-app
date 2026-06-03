@@ -9,28 +9,22 @@
 
   <link rel="stylesheet" href="css/styles.css" />
 
-  <!-- Alpine.js por CDN. 'defer' es obligatorio: hace que Alpine arranque
-       recién cuando el HTML terminó de cargar. En este paso casi no se usa,
-       pero lo dejamos listo para los siguientes. -->
+  <!-- Nuestra lógica Alpine. Va ANTES del script de Alpine: registra el
+       componente 'app' escuchando el evento alpine:init, que Alpine dispara
+       al arrancar. Ambos con 'defer', así que se ejecutan en orden. -->
+  <script defer src="js/app.js"></script>
+  <!-- Alpine.js por CDN -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
 </head>
 
-<!--
-  x-data define el estado de la app:
-   - pantalla: cuál de las 3 vistas se muestra ('inicio' | 'catalogo' | 'carrito').
-     Por ahora solo 'inicio' y un placeholder de 'catalogo'.
-   - nombre: lo que escribe el cliente en "¿Cómo te llamamos?".
-     OJO: en este paso NO se persiste (eso es el Paso 9). Si recarga, se pierde.
--->
-<body x-data="{ pantalla: 'inicio', nombre: '' }">
+<!-- x-data="app": el estado y la lógica viven en js/app.js -->
+<body x-data="app">
 
-  <div class="contenedor">
-
-    <!-- ===================================================
-         PANTALLA 1: INICIO (versión primera visita)
-         x-show la muestra solo cuando pantalla === 'inicio'
-         =================================================== -->
-    <main class="inicio" x-show="pantalla === 'inicio'">
+  <!-- ===================================================
+       PANTALLA 1: INICIO (versión primera visita)
+       =================================================== -->
+  <div class="contenedor" x-show="pantalla === 'inicio'">
+    <main class="inicio">
 
       <img class="inicio__logo" src="assets/topstyle-logo.png"
            alt="TopStyle — Professional Hair Stylist Products" />
@@ -39,57 +33,126 @@
         <h1 class="inicio__saludo">Bienvenido a TopStyle</h1>
         <p class="inicio__propuesta">Armá tu pedido en 2 minutos y mandánoslo listo por WhatsApp.</p>
 
-        <!-- Campo opcional de nombre. x-model lo ata a la variable 'nombre'. -->
+        <!-- Campo opcional de nombre. No persiste todavía (Paso 9). -->
         <div class="campo-nombre">
           <label class="campo-nombre__label" for="nombre">¿Cómo te llamamos?</label>
           <input class="campo-nombre__input" id="nombre" type="text"
                  x-model="nombre" placeholder="Tu nombre (opcional)" autocomplete="off" />
         </div>
 
-        <!-- Botón principal: cambia a la pantalla de catálogo (placeholder por ahora) -->
         <button class="btn-principal" @click="pantalla = 'catalogo'">
           Empezar pedido
         </button>
       </div>
 
-      <!-- Footer: links a PDFs. Deshabilitados hasta que Gabb pase los archivos. -->
+      <!-- Footer: links a los PDFs (ya hospedados en el repo) -->
       <footer class="footer-pdfs">
         <p class="footer-pdfs__titulo">Catálogos y cartas de color</p>
         <div class="footer-pdfs__lista">
-          <button class="pdf-link" type="button" disabled>
-            <span>Catálogo Question</span>
-            <span class="pdf-link__estado">(próximamente)</span>
-          </button>
-          <button class="pdf-link" type="button" disabled>
-            <span>Catálogo Beauty Color</span>
-            <span class="pdf-link__estado">(próximamente)</span>
-          </button>
-          <button class="pdf-link" type="button" disabled>
-            <span>Carta de color Question Coloration</span>
-            <span class="pdf-link__estado">(próximamente)</span>
-          </button>
-          <button class="pdf-link" type="button" disabled>
-            <span>Carta Lumiplex</span>
-            <span class="pdf-link__estado">(próximamente)</span>
-          </button>
+          <a class="pdf-link" href="assets/pdfs/catalogo-question.pdf" target="_blank" rel="noopener">
+            <span>Catálogo Question</span><span class="pdf-link__estado">PDF ↗</span>
+          </a>
+          <a class="pdf-link" href="assets/pdfs/catalogo-beauty.pdf" target="_blank" rel="noopener">
+            <span>Catálogo Beauty Color</span><span class="pdf-link__estado">PDF ↗</span>
+          </a>
+          <a class="pdf-link" href="assets/pdfs/carta-color-question.pdf" target="_blank" rel="noopener">
+            <span>Carta de color Question Coloration</span><span class="pdf-link__estado">PDF ↗</span>
+          </a>
+          <a class="pdf-link" href="assets/pdfs/carta-lumiplex.pdf" target="_blank" rel="noopener">
+            <span>Carta Lumiplex</span><span class="pdf-link__estado">PDF ↗</span>
+          </a>
         </div>
       </footer>
 
-      <!-- Marca de versión: sirve para verificar visualmente que el deploy se actualizó -->
-      <p class="version">Paso 2 · build 2026-06-03 00:23</p>
+      <p class="version">Paso 3 · build 2026-06-03 01:10</p>
     </main>
-
-    <!-- ===================================================
-         PANTALLA 2: CATÁLOGO (placeholder)
-         Se construye de verdad en el Paso 3. Por ahora solo verifica
-         que la transición entre pantallas funciona.
-         =================================================== -->
-    <main class="placeholder" x-show="pantalla === 'catalogo'" x-cloak>
-      <h2 class="placeholder__titulo">Pantalla 2 · Catálogo</h2>
-      <p class="placeholder__texto">Próximamente. Se construye en el siguiente paso.</p>
-      <button class="btn-volver" @click="pantalla = 'inicio'">← Volver al inicio</button>
-    </main>
-
   </div>
+
+  <!-- ===================================================
+       PANTALLA 2: CATÁLOGO
+       Render del grid agrupado por línea. En este paso los tabs y el
+       buscador están presentes pero inertes (se conectan en el Paso 4),
+       y el botón de agregar todavía no hace nada (Paso 5/6).
+       =================================================== -->
+  <div class="catalogo" x-show="pantalla === 'catalogo'" x-cloak>
+
+    <!-- Header sticky: volver + buscador (inerte por ahora) -->
+    <header class="cat-header">
+      <button class="cat-volver" @click="pantalla = 'inicio'" aria-label="Volver al inicio">←</button>
+      <input class="cat-buscador" type="search" placeholder="Buscar producto…" disabled
+             aria-label="Buscar (se activa en el próximo paso)" />
+    </header>
+
+    <!-- Tabs principales (inertes en este paso) -->
+    <nav class="cat-tabs" aria-label="Líneas de producto">
+      <template x-for="t in tabs" :key="t.key">
+        <button class="cat-tab" :class="{ 'is-active': tabActivo === t.key }"
+                x-text="t.label"></button>
+      </template>
+    </nav>
+
+    <!-- Cuerpo: secciones por línea -->
+    <div class="cat-body">
+      <template x-for="linea in lineas" :key="linea.key">
+        <section class="cat-seccion">
+          <h2 class="cat-seccion__titulo" x-text="linea.label"></h2>
+
+          <!-- Beauty Color: agrupado en sub-líneas -->
+          <template x-if="linea.key === 'beautycolor'">
+            <div>
+              <template x-for="sub in subBeauty" :key="sub">
+                <div class="cat-sub">
+                  <h3 class="cat-sub__titulo" x-text="sub"></h3>
+                  <div class="cat-grid">
+                    <template x-for="p in productosDeSublinea(sub)" :key="p.id">
+                      <article class="card">
+                        <div class="card__foto">
+                          <img :src="p.imagen" :alt="p.nombre" loading="lazy" />
+                        </div>
+                        <div class="card__info">
+                          <p class="card__nombre" x-text="p.nombre"></p>
+                          <p class="card__marca" x-text="p.marca"></p>
+                        </div>
+                        <button class="card__add" disabled
+                                :class="{ 'card__add--tono': p.requiereVariante }"
+                                x-text="p.requiereVariante ? 'Elegir tono' : '+'"></button>
+                      </article>
+                    </template>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </template>
+
+          <!-- Resto de líneas: grid directo -->
+          <template x-if="linea.key !== 'beautycolor'">
+            <div class="cat-grid">
+              <template x-for="p in productosDeLinea(linea.key)" :key="p.id">
+                <article class="card">
+                  <div class="card__foto">
+                    <img :src="p.imagen" :alt="p.nombre" loading="lazy" />
+                  </div>
+                  <div class="card__info">
+                    <p class="card__nombre" x-text="p.nombre"></p>
+                    <p class="card__marca" x-text="p.marca"></p>
+                  </div>
+                  <button class="card__add" disabled
+                          :class="{ 'card__add--tono': p.requiereVariante }"
+                          x-text="p.requiereVariante ? 'Elegir tono' : '+'"></button>
+                </article>
+              </template>
+            </div>
+          </template>
+        </section>
+      </template>
+    </div>
+
+    <!-- Footer fijo: contador + ver pedido (inertes, Paso 5/7) -->
+    <footer class="cat-footer">
+      <span class="cat-footer__contador">0 productos en tu pedido</span>
+      <button class="cat-footer__ver" disabled>Ver pedido</button>
+    </footer>
+  </div>
+
 </body>
 </html>

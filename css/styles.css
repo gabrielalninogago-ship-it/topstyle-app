@@ -223,6 +223,213 @@ body {
 .btn-volver:hover { background: #faf5f8; }
 
 /* =========================================================
+   Pantalla 2: Catálogo
+   Columna acotada, header sticky arriba y footer fijo abajo.
+   ========================================================= */
+
+.catalogo {
+  max-width: 600px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--fondo);
+}
+
+/* ----- Header sticky: volver + buscador ----- */
+.cat-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  background: var(--fondo);
+  border-bottom: 1px solid var(--linea);
+}
+
+.cat-volver {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--plum);
+  background: #fff;
+  border: 1.5px solid var(--linea);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.cat-volver:hover { border-color: var(--plum); }
+
+.cat-buscador {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--texto);
+  background: #faf8f9;
+  border: 1.5px solid var(--linea);
+  border-radius: 10px;
+  outline: none;
+}
+/* Inerte en el Paso 3: se ve apagado a propósito. Se activa en el Paso 4. */
+.cat-buscador:disabled { color: var(--texto-tenue); cursor: not-allowed; }
+
+/* ----- Tabs (scroll horizontal). Inertes en este paso. ----- */
+.cat-tabs {
+  position: sticky;
+  top: 56px;                 /* debajo del header */
+  z-index: 19;
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  overflow-x: auto;
+  background: var(--fondo);
+  border-bottom: 1px solid var(--linea);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.cat-tabs::-webkit-scrollbar { display: none; }
+
+.cat-tab {
+  flex: 0 0 auto;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.86rem;
+  font-family: inherit;
+  white-space: nowrap;
+  color: var(--texto-suave);
+  background: #f4eef2;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.cat-tab.is-active {
+  color: #fff;
+  background: var(--plum);
+}
+
+/* ----- Cuerpo con las secciones ----- */
+.cat-body {
+  flex: 1;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.cat-seccion { margin-top: 1.4rem; }
+
+.cat-seccion__titulo {
+  font-size: 1.05rem;
+  color: var(--plum);
+  margin: 0 0 0.7rem;
+}
+
+.cat-sub { margin-bottom: 1rem; }
+
+.cat-sub__titulo {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--texto-suave);
+  margin: 0 0 0.5rem;
+}
+
+/* ----- Grid de productos ----- */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.7rem;
+}
+
+/* ----- Card de producto ----- */
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.card__foto {
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+}
+.card__foto img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.card__info {
+  flex: 1;
+  padding: 0.5rem 0.6rem 0.3rem;
+}
+.card__nombre {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--texto);
+  margin: 0 0 0.15rem;
+  line-height: 1.25;
+}
+.card__marca {
+  font-size: 0.74rem;
+  color: var(--texto-tenue);
+  margin: 0;
+}
+
+.card__add {
+  margin: 0.45rem 0.6rem 0.6rem;
+  padding: 0.45rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: var(--plum);
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.card__add--tono { font-size: 0.82rem; }
+/* Inerte en el Paso 3 (se conecta en el Paso 5/6). */
+.card__add:disabled { background: #d8c7d2; cursor: not-allowed; }
+
+/* ----- Footer fijo del catálogo ----- */
+.cat-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.7rem 1rem;
+  background: var(--fondo);
+  border-top: 1px solid var(--linea);
+}
+.cat-footer__contador {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+.cat-footer__ver {
+  padding: 0.6rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: var(--plum);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.cat-footer__ver:disabled { background: #d8c7d2; cursor: not-allowed; }
+
+/* =========================================================
    Desktop: la app sigue siendo una columna angosta y centrada.
    No la estiramos a todo el ancho (es una app pensada para celular).
    ========================================================= */
