@@ -1,0 +1,238 @@
+/* =========================================================
+   TopStyle App — estilos base
+   Paso 2: Pantalla 1 (Inicio) versión "primera visita".
+   Look minimal, mobile-first, fuente del sistema (sin fuentes externas).
+   ========================================================= */
+
+/* ----- Variables de color y medidas ----- */
+:root {
+  --plum:        #5a2a4d;   /* acento principal (botón, títulos) */
+  --plum-oscuro: #43203a;   /* hover del botón */
+  --texto:       #2b2230;   /* texto principal */
+  --texto-suave: #6b5f68;   /* texto secundario */
+  --texto-tenue: #9c8f98;   /* texto muy suave / deshabilitado */
+  --fondo:       #ffffff;   /* fondo de la app */
+  --linea:       #ece6ea;   /* bordes suaves */
+  --radio:       14px;      /* redondeo estándar */
+  --ancho-max:   460px;     /* ancho máximo de la columna (mobile-first) */
+}
+
+/* ----- Reset mínimo ----- */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* x-cloak: oculta el elemento hasta que Alpine termina de arrancar.
+   Evita que las pantallas "escondidas" se vean por un instante al cargar. */
+[x-cloak] { display: none !important; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--texto);
+  background: var(--fondo);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ----- Contenedor centrado, ancho acotado (mobile-first) ----- */
+.contenedor {
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;            /* alto real del viewport en mobile */
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.25rem 1rem;
+}
+
+/* =========================================================
+   Pantalla 1: Inicio
+   ========================================================= */
+
+.inicio {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Logo arriba */
+.inicio__logo {
+  display: block;
+  width: 130px;
+  height: auto;
+  margin: 0.5rem auto 1.5rem;
+}
+
+/* Bloque central: saludo + propuesta + nombre + botón */
+.inicio__centro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 0.4rem;
+}
+
+.inicio__saludo {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--plum);
+  margin: 0;
+}
+
+.inicio__propuesta {
+  font-size: 1.02rem;
+  color: var(--texto-suave);
+  margin: 0 0 1.4rem;
+}
+
+/* Campo "¿Cómo te llamamos?" */
+.campo-nombre {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.campo-nombre__label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  margin-bottom: 0.35rem;
+}
+
+.campo-nombre__input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--texto);
+  background: #fff;
+  border: 1.5px solid var(--linea);
+  border-radius: var(--radio);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.campo-nombre__input:focus { border-color: var(--plum); }
+.campo-nombre__input::placeholder { color: var(--texto-tenue); }
+
+/* Botón principal grande */
+.btn-principal {
+  display: block;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: var(--plum);
+  border: none;
+  border-radius: var(--radio);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn-principal:hover { background: var(--plum-oscuro); }
+.btn-principal:active { transform: translateY(1px); }
+
+/* ----- Footer con links a PDFs (placeholders por ahora) ----- */
+.footer-pdfs {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--linea);
+}
+
+.footer-pdfs__titulo {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--texto-tenue);
+  margin: 0 0 0.6rem;
+}
+
+.footer-pdfs__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Cada PDF es un "link" deshabilitado mientras no tengamos el archivo */
+.pdf-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.92rem;
+  font-family: inherit;
+  text-align: left;
+  color: var(--texto-tenue);
+  background: #faf8f9;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  cursor: not-allowed;
+}
+
+.pdf-link__estado {
+  font-size: 0.78rem;
+  color: var(--texto-tenue);
+  white-space: nowrap;
+}
+
+/* Marca de versión, sirve para verificar deploys */
+.version {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--texto-tenue);
+  margin-top: 1.25rem;
+}
+
+/* =========================================================
+   Placeholder de la Pantalla 2 (Catálogo) — se construye en el Paso 3
+   ========================================================= */
+
+.placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.placeholder__titulo {
+  font-size: 1.3rem;
+  color: var(--plum);
+  margin: 0;
+}
+
+.placeholder__texto {
+  color: var(--texto-suave);
+  margin: 0;
+}
+
+.btn-volver {
+  padding: 0.7rem 1.2rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--plum);
+  background: #fff;
+  border: 1.5px solid var(--plum);
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+.btn-volver:hover { background: #faf5f8; }
+
+/* =========================================================
+   Desktop: la app sigue siendo una columna angosta y centrada.
+   No la estiramos a todo el ancho (es una app pensada para celular).
+   ========================================================= */
+@media (min-width: 600px) {
+  .contenedor {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    min-height: auto;
+    border: 1px solid var(--linea);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(90, 42, 77, 0.06);
+  }
+}

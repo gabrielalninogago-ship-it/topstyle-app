@@ -2,50 +2,94 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <!-- viewport: hace que la página se adapte al ancho del celular (mobile-first) -->
+  <!-- viewport: la app se adapta al ancho del celular (mobile-first) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TopStyle App — En construcción</title>
-  <style>
-    /* Estilos mínimos solo para que el "hola mundo" se vea prolijo.
-       Esto NO es el diseño de la app, es un placeholder del Paso 1. */
-    :root {
-      --plum: #5a2a4d;
-      --blush: #fcf6fa;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: var(--blush);
-      color: var(--plum);
-      text-align: center;
-      padding: 2rem;
-    }
-    h1 { font-size: 1.8rem; margin: 0; }
-    p { margin: 0; color: #6b4a60; }
-    .deploy {
-      margin-top: 1.5rem;
-      font-size: 0.85rem;
-      color: #9a7a8e;
-      font-variant-numeric: tabular-nums;
-    }
-    .deploy strong { color: var(--plum); }
-  </style>
-</head>
-<body>
-  <h1>TopStyle App</h1>
-  <p>En construcción 🚧</p>
+  <meta name="theme-color" content="#5a2a4d" />
+  <title>TopStyle — Armá tu pedido</title>
 
-  <!-- DEPLOY-MARKER: esta línea se actualiza a mano en cada push.
-       Sirve para verificar visualmente que Netlify re-deployó.
-       Si la fecha de abajo cambió en la URL pública tras un push,
-       el deploy automático funciona. -->
-  <p class="deploy">Último deploy: <strong>2026-06-02 23:21</strong></p>
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Alpine.js por CDN. 'defer' es obligatorio: hace que Alpine arranque
+       recién cuando el HTML terminó de cargar. En este paso casi no se usa,
+       pero lo dejamos listo para los siguientes. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+</head>
+
+<!--
+  x-data define el estado de la app:
+   - pantalla: cuál de las 3 vistas se muestra ('inicio' | 'catalogo' | 'carrito').
+     Por ahora solo 'inicio' y un placeholder de 'catalogo'.
+   - nombre: lo que escribe el cliente en "¿Cómo te llamamos?".
+     OJO: en este paso NO se persiste (eso es el Paso 9). Si recarga, se pierde.
+-->
+<body x-data="{ pantalla: 'inicio', nombre: '' }">
+
+  <div class="contenedor">
+
+    <!-- ===================================================
+         PANTALLA 1: INICIO (versión primera visita)
+         x-show la muestra solo cuando pantalla === 'inicio'
+         =================================================== -->
+    <main class="inicio" x-show="pantalla === 'inicio'">
+
+      <img class="inicio__logo" src="assets/topstyle-logo.png"
+           alt="TopStyle — Professional Hair Stylist Products" />
+
+      <div class="inicio__centro">
+        <h1 class="inicio__saludo">Bienvenido a TopStyle</h1>
+        <p class="inicio__propuesta">Armá tu pedido en 2 minutos y mandánoslo listo por WhatsApp.</p>
+
+        <!-- Campo opcional de nombre. x-model lo ata a la variable 'nombre'. -->
+        <div class="campo-nombre">
+          <label class="campo-nombre__label" for="nombre">¿Cómo te llamamos?</label>
+          <input class="campo-nombre__input" id="nombre" type="text"
+                 x-model="nombre" placeholder="Tu nombre (opcional)" autocomplete="off" />
+        </div>
+
+        <!-- Botón principal: cambia a la pantalla de catálogo (placeholder por ahora) -->
+        <button class="btn-principal" @click="pantalla = 'catalogo'">
+          Empezar pedido
+        </button>
+      </div>
+
+      <!-- Footer: links a PDFs. Deshabilitados hasta que Gabb pase los archivos. -->
+      <footer class="footer-pdfs">
+        <p class="footer-pdfs__titulo">Catálogos y cartas de color</p>
+        <div class="footer-pdfs__lista">
+          <button class="pdf-link" type="button" disabled>
+            <span>Catálogo Question</span>
+            <span class="pdf-link__estado">(próximamente)</span>
+          </button>
+          <button class="pdf-link" type="button" disabled>
+            <span>Catálogo Beauty Color</span>
+            <span class="pdf-link__estado">(próximamente)</span>
+          </button>
+          <button class="pdf-link" type="button" disabled>
+            <span>Carta de color Question Coloration</span>
+            <span class="pdf-link__estado">(próximamente)</span>
+          </button>
+          <button class="pdf-link" type="button" disabled>
+            <span>Carta Lumiplex</span>
+            <span class="pdf-link__estado">(próximamente)</span>
+          </button>
+        </div>
+      </footer>
+
+      <!-- Marca de versión: sirve para verificar visualmente que el deploy se actualizó -->
+      <p class="version">Paso 2 · build 2026-06-03 00:23</p>
+    </main>
+
+    <!-- ===================================================
+         PANTALLA 2: CATÁLOGO (placeholder)
+         Se construye de verdad en el Paso 3. Por ahora solo verifica
+         que la transición entre pantallas funciona.
+         =================================================== -->
+    <main class="placeholder" x-show="pantalla === 'catalogo'" x-cloak>
+      <h2 class="placeholder__titulo">Pantalla 2 · Catálogo</h2>
+      <p class="placeholder__texto">Próximamente. Se construye en el siguiente paso.</p>
+      <button class="btn-volver" @click="pantalla = 'inicio'">← Volver al inicio</button>
+    </main>
+
+  </div>
 </body>
 </html>

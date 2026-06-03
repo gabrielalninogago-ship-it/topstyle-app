@@ -17,7 +17,7 @@ El detalle funcional completo vive en el PRD:
 
 ## Estado
 
-🚧 **En construcción.** Paso 1: setup de repo + hosting + deploy automático.
+🚧 **En construcción.** Paso 2: Pantalla 1 (Inicio), versión "primera visita".
 
 ## Hosting
 
