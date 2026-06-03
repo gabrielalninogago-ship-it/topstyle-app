@@ -39,6 +39,7 @@
   const tituloEl    = document.getElementById('colorModalTitle');
   const cerrarBtn   = document.getElementById('colorModalClose');
   const buscarInput = document.getElementById('colorSearch');
+  const limpiarBtn  = document.getElementById('colorSearchClear');
   const familiasEl  = document.getElementById('colorFamilies');
   const gridEl      = document.getElementById('colorGrid');
   const selListEl   = document.getElementById('colorSelectedList');
@@ -64,6 +65,7 @@
       familiaActiva = 'all';
       termino = '';
       buscarInput.value = '';
+      limpiarBtn.hidden = true;
       selLabelEl.textContent = 'Tonos seleccionados';
       eyebrowEl.textContent = config.label || '';
       tituloEl.textContent = 'Elegí tu tono';
@@ -162,7 +164,17 @@
 
   buscarInput.addEventListener('input', (e) => {
     termino = e.target.value.trim();
+    limpiarBtn.hidden = e.target.value.length === 0;
     renderGrid();
+  });
+
+  // Botón "×" para limpiar la búsqueda de un toque.
+  limpiarBtn.addEventListener('click', () => {
+    buscarInput.value = '';
+    termino = '';
+    limpiarBtn.hidden = true;
+    renderGrid();
+    buscarInput.focus();
   });
 
   gridEl.addEventListener('click', (e) => {
