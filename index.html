@@ -66,7 +66,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 6.2 · build 2026-06-03 02:25</p>
+      <p class="version">Paso 7 · build 2026-06-03 02:45</p>
     </main>
   </div>
 
@@ -154,17 +154,60 @@
   </div>
 
   <!-- ===================================================
-       PANTALLA 3: CARRITO (placeholder)
-       Se construye de verdad en el Paso 7. Por ahora confirma que el
-       botón "Ver pedido" navega y que el carrito tiene items.
+       PANTALLA 3: CARRITO
+       Lista editable del pedido. El form del cliente + envío por WhatsApp
+       son el Paso 8 (acá el botón de enviar está inerte).
        =================================================== -->
-  <div class="contenedor" x-show="pantalla === 'carrito'" x-cloak>
-    <main class="placeholder">
-      <h2 class="placeholder__titulo">Pantalla 3 · Tu pedido</h2>
-      <p class="placeholder__texto"
-         x-text="cantidadTotal + (cantidadTotal === 1 ? ' producto' : ' productos') + ' en el pedido. Se construye en el próximo paso.'"></p>
-      <button class="btn-volver" @click="pantalla = 'catalogo'">← Seguir agregando</button>
-    </main>
+  <div class="carrito" x-show="pantalla === 'carrito'" x-cloak>
+
+    <header class="carrito__head">
+      <h1 class="carrito__titulo">Tu pedido</h1>
+      <button class="carrito__seguir" @click="pantalla = 'catalogo'">+ Seguir agregando</button>
+    </header>
+
+    <div class="carrito__body">
+
+      <!-- Vacío -->
+      <div class="carrito__vacio" x-show="carrito.length === 0">
+        <p>Tu pedido está vacío.</p>
+        <button class="btn-volver" @click="pantalla = 'catalogo'">Ir al catálogo</button>
+      </div>
+
+      <!-- Items -->
+      <template x-for="ci in itemsCarrito" :key="ci.id + (ci.variant ? ci.variant.code : '')">
+        <div class="ci">
+          <div class="ci__foto">
+            <img :src="ci.prod ? ci.prod.imagen : 'assets/placeholder.svg'"
+                 :alt="ci.prod ? ci.prod.nombre : ''" loading="lazy" />
+          </div>
+          <div class="ci__info">
+            <p class="ci__nombre" x-text="ci.prod ? ci.prod.nombre : ci.id"></p>
+            <p class="ci__variante" x-show="ci.variant">
+              <span class="ci__swatch" :style="ci.variant ? ('background:' + ci.variant.hex) : ''"></span>
+              <span x-text="ci.variant ? ('Tono ' + ci.variant.code + ' — ' + ci.variant.name) : ''"></span>
+            </p>
+            <div class="ci__acciones">
+              <div class="ci__stepper">
+                <button @click="cambiarCantidad(ci.id, ci.qty - 1, ci.variant ? ci.variant.code : null)" aria-label="Restar">−</button>
+                <span x-text="ci.qty"></span>
+                <button @click="cambiarCantidad(ci.id, ci.qty + 1, ci.variant ? ci.variant.code : null)" aria-label="Sumar">+</button>
+              </div>
+              <button class="ci__quitar" @click="quitar(ci.id, ci.variant ? ci.variant.code : null)">Quitar</button>
+            </div>
+          </div>
+        </div>
+      </template>
+
+    </div>
+
+    <!-- Footer: total + enviar (inerte hasta el Paso 8) -->
+    <footer class="carrito__foot" x-show="carrito.length > 0" x-cloak>
+      <span class="carrito__contador"
+            x-text="cantidadTotal + (cantidadTotal === 1 ? ' producto' : ' productos')"></span>
+      <button class="carrito__enviar" disabled title="Se activa en el próximo paso">
+        Enviar pedido por WhatsApp
+      </button>
+    </footer>
   </div>
 
   <!-- ===================================================

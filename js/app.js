@@ -95,6 +95,11 @@ document.addEventListener('alpine:init', () => {
     productoPorId(id) {
       return this.productos.find(p => p.id === id);
     },
+    // Items del carrito enriquecidos con los datos del producto, para el render
+    // de la Pantalla 3 (foto, nombre).
+    get itemsCarrito() {
+      return this.carrito.map(i => ({ ...i, prod: this.productoPorId(i.id) }));
+    },
 
     // --- Toast (feedback efímero al agregar) ---
     mostrarToast(msg) {
