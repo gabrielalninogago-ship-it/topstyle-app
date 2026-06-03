@@ -5,6 +5,20 @@ Rutina de cierre de sesión: grabar memorias, anotar acá el resumen, commit + p
 
 ---
 
+## Infra — 2026-06-03
+
+**Hosting migrado de Netlify a Cloudflare Pages** el 2026-06-03 por límite de
+tokens del free tier de Netlify. URL nueva: https://topstyle-app.pages.dev
+(la vieja https://cheery-paletas-012cd9.netlify.app se apaga pronto). Cloudflare
+Pages da bandwidth ilimitado y mejor latencia en Latam.
+
+Límite duro de Cloudflare Pages: **25 MB por archivo**. En la migración hubo que
+comprimir con Ghostscript (`/ebook`): `carta-color-question.pdf` (era 25.5 MB) y
+`catalogo-beauty.pdf` (era 40.5 MB). Regla para el futuro: cualquier asset >25 MB
+se comprime antes de sumarlo al repo, o se hostea externo y se linkea.
+
+---
+
 ## Sesión 1 — 2026-06-02 / 03
 
 **Arrancamos de cero** (repo vacío) y dejamos la app funcionando hasta el carrito.

@@ -17,18 +17,26 @@ El detalle funcional completo vive en el PRD:
 
 ## Estado
 
-🚧 **En construcción.** Paso 7: Carrito (Pantalla 3) con edición de cantidades.
+🚧 **En construcción.** Paso 8: form del cliente + envío por WhatsApp.
 
 ## Hosting
 
-- **Netlify**, deploy automático conectado a este repo de GitHub.
+- **Cloudflare Pages**, deploy automático conectado a este repo de GitHub.
+  (Migrado desde Netlify el 2026-06-03 por límite de tokens del free tier;
+  Cloudflare Pages da bandwidth ilimitado y mejor latencia en Latam.)
 - Cada push a la rama principal redeploya solo en 1-2 minutos.
-- URL pública (Netlify): **https://cheery-paletas-012cd9.netlify.app**
-- Panel de administración: https://app.netlify.com/projects/cheery-paletas-012cd9
+- URL pública: **https://topstyle-app.pages.dev**
+- Panel de administración: dashboard de Cloudflare Pages (dash.cloudflare.com).
 
-Para verificar que un deploy se actualizó: el `index.html` muestra
-"Último deploy: <fecha>". Esa fecha se edita a mano en cada push; si cambia
-en la URL pública, el deploy automático anduvo.
+Para verificar que un deploy se actualizó: el `index.html` muestra un marcador
+de versión (`.version`) en Inicio que se bumpea en cada push. Si cambia en la
+URL pública, el deploy automático anduvo.
+
+> ⚠️ **Límite de tamaño de archivo:** Cloudflare Pages rechaza cualquier
+> archivo de más de **25 MB**. Antes de sumar un asset pesado al repo (PDF,
+> imagen, etc.), comprimirlo o hostearlo externo y linkearlo. En la migración
+> hubo que comprimir `carta-color-question.pdf` y `catalogo-beauty.pdf` con
+> Ghostscript (modo `/ebook`).
 
 ## Cómo trabajamos
 
