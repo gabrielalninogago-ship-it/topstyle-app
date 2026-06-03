@@ -9,6 +9,8 @@
 
   <link rel="stylesheet" href="css/styles.css" />
 
+  <!-- Configuración global (WHATSAPP_NUMBER). Va primero para que app.js la lea. -->
+  <script defer src="js/config.js"></script>
   <!-- Nuestra lógica Alpine. Va ANTES del script de Alpine: registra el
        componente 'app' escuchando el evento alpine:init, que Alpine dispara
        al arrancar. Ambos con 'defer', así que se ejecutan en orden. -->
@@ -66,7 +68,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 7 · build 2026-06-03 02:45</p>
+      <p class="version">Paso 8 · build 2026-06-03 envío WhatsApp</p>
     </main>
   </div>
 
@@ -198,14 +200,31 @@
         </div>
       </template>
 
+      <!-- Form del cliente: dos campos opcionales, siempre visibles. Sin tipo,
+           zona ni WhatsApp (decisión cerrada con Gabb). El nombre viene de Inicio. -->
+      <div class="carrito__form">
+        <label class="campo">
+          <span class="campo__label">Productos adicionales <em>(opcional)</em></span>
+          <textarea class="campo__input" rows="2" x-model="adicionales"
+            placeholder="¿Querés algo que no aparece en el catálogo? Ej: 2 keratin lift, 1 sachet anti-frizz..."></textarea>
+        </label>
+        <label class="campo">
+          <span class="campo__label">Notas / observaciones <em>(opcional)</em></span>
+          <textarea class="campo__input" rows="2" x-model="notas"
+            placeholder="¿Algo más? Forma de entrega, urgencia, etc."></textarea>
+        </label>
+      </div>
+
     </div>
 
-    <!-- Footer: total + enviar (inerte hasta el Paso 8) -->
-    <footer class="carrito__foot" x-show="carrito.length > 0" x-cloak>
-      <span class="carrito__contador"
+    <!-- Footer: contador + enviar por WhatsApp -->
+    <footer class="carrito__foot" x-cloak>
+      <span class="carrito__contador" x-show="carrito.length > 0"
             x-text="cantidadTotal + (cantidadTotal === 1 ? ' producto' : ' productos')"></span>
-      <button class="carrito__enviar" disabled title="Se activa en el próximo paso">
-        Enviar pedido por WhatsApp
+      <button class="carrito__enviar" :disabled="!puedeEnviar"
+              @click="enviarWhatsApp()"
+              :title="puedeEnviar ? 'Abrir WhatsApp con el pedido' : 'Agregá productos o escribí algún adicional'">
+        Enviar por WhatsApp
       </button>
     </footer>
   </div>

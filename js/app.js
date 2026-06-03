@@ -18,6 +18,8 @@ document.addEventListener('alpine:init', () => {
 
     // --- Carrito (en memoria; la persistencia es el Paso 9) ---
     carrito: [],               // items: { id, qty, variant? }
+    adicionales: '',           // textarea: productos fuera del catálogo (opcional)
+    notas: '',                 // textarea: observaciones (opcional)
     toast: '',                 // mensaje efímero de feedback
     toastTimer: null,
 
@@ -99,6 +101,89 @@ document.addEventListener('alpine:init', () => {
     // de la Pantalla 3 (foto, nombre).
     get itemsCarrito() {
       return this.carrito.map(i => ({ ...i, prod: this.productoPorId(i.id) }));
+    },
+
+    // --- Envío por WhatsApp (Paso 8) ---
+    // El botón se habilita si hay productos en el carrito O si el cliente
+    // escribió algo en "adicionales". Notas sola no alcanza para enviar.
+    get hayAdicionales() {
+      return this.adicionales.trim().length > 0;
+    },
+    get puedeEnviar() {
+      return this.carrito.length > 0 || this.hayAdicionales;
+    },
+
+    // Agrupa el carrito por producto para armar las líneas del mensaje.
+    // Los productos con tono se juntan en una sola línea con la lista de tonos
+    // ("(tonos: 7.1, 7.3 x2)"); los simples van con su cantidad ("2 x ...").
+    _lineasProductos() {
+      const grupos = [];
+      const indice = {};
+      this.carrito.forEach(item => {
+        let g = indice[item.id];
+        if (!g) {
+          g = { prod: this.productoPorId(item.id), simple: 0, tonos: [] };
+          indice[item.id] = g;
+          grupos.push(g);
+        }
+        if (item.variant) g.tonos.push({ code: item.variant.code, qty: item.qty });
+        else g.simple += item.qty;
+      });
+
+      const lineas = [];
+      grupos.forEach(g => {
+        const nombre = g.prod ? g.prod.nombre : '(producto)';
+        if (g.tonos.length) {
+          // Cada tono: solo el código; si la cantidad es >1 se sufija "xN".
+          const tonos = g.tonos.map(t => (t.qty > 1 ? `${t.code} x${t.qty}` : t.code)).join(', ');
+          lineas.push(`- ${nombre} (tonos: ${tonos})`);
+        }
+        if (g.simple > 0) lineas.push(`- ${g.simple} x ${nombre}`);
+      });
+      return lineas;
+    },
+
+    // Convierte un textarea libre en líneas con viñeta, descartando renglones vacíos.
+    _lineasTexto(texto) {
+      return texto.split('\n').map(l => l.trim()).filter(l => l).map(l => `- ${l}`);
+    },
+
+    // Arma el mensaje completo según el formato del PRD §7 (sin precios).
+    // Cada sección se omite si no tiene contenido.
+    construirMensaje() {
+      const partes = [];
+      partes.push('🛒 Pedido TopStyle');
+      partes.push('');
+      const nombre = this.nombre.trim();
+      partes.push(nombre ? `Hola! Soy ${nombre}` : 'Hola!');
+
+      const prods = this._lineasProductos();
+      if (prods.length) {
+        partes.push('');
+        partes.push('Productos:');
+        prods.forEach(l => partes.push(l));
+      }
+      if (this.hayAdicionales) {
+        partes.push('');
+        partes.push('Adicionales:');
+        this._lineasTexto(this.adicionales).forEach(l => partes.push(l));
+      }
+      if (this.notas.trim()) {
+        partes.push('');
+        partes.push('Notas:');
+        this._lineasTexto(this.notas).forEach(l => partes.push(l));
+      }
+      partes.push('');
+      partes.push('Enviado desde TopStyle App');
+      return partes.join('\n');
+    },
+
+    // Abre wa.me en una pestaña nueva con el mensaje ya codificado.
+    enviarWhatsApp() {
+      if (!this.puedeEnviar) return;
+      const numero = window.WHATSAPP_NUMBER;
+      const texto = encodeURIComponent(this.construirMensaje());
+      window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
     },
 
     // --- Toast (feedback efímero al agregar) ---

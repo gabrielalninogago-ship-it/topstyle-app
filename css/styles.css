@@ -619,6 +619,32 @@ body {
 }
 .carrito__enviar:disabled { background: #bfe6cd; cursor: not-allowed; }
 
+/* ----- Form del cliente (campos opcionales del carrito) ----- */
+.carrito__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--linea);
+}
+.campo { display: flex; flex-direction: column; gap: 0.35rem; }
+.campo__label { font-size: 0.9rem; font-weight: 600; color: var(--texto); }
+.campo__label em { font-weight: 400; font-style: normal; color: var(--texto-tenue); }
+.campo__input {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  resize: vertical;
+}
+.campo__input::placeholder { color: var(--texto-tenue); }
+.campo__input:focus { outline: none; border-color: var(--plum); }
+
 /* ----- Toast (feedback efímero al agregar al carrito) ----- */
 .toast {
   position: fixed;
