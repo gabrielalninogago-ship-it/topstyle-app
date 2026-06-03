@@ -5,6 +5,33 @@ Rutina de cierre de sesión: grabar memorias, anotar acá el resumen, commit + p
 
 ---
 
+## Sesión 2 — 2026-06-03
+
+### Hecho
+- **Paso 8 — Form del cliente + envío por WhatsApp.** VALIDADO en el celu.
+  - Form simplificado en Pantalla 3: solo 2 textareas opcionales
+    ("Productos adicionales" y "Notas / observaciones"). Decisión de Gabb:
+    NO se pide tipo, zona ni WhatsApp del cliente (el nombre viene de Inicio;
+    el destino se identifica por contacto agendado).
+  - Arma el mensaje formato PRD §7 (sin precios) y abre `wa.me/...` en pestaña
+    nueva (`encodeURIComponent`). Secciones se omiten si están vacías.
+  - Productos con tono agrupados en una línea: `(tonos: 7.1, 7.3 x2)` (el "xN"
+    solo si la cantidad de ese tono es >1). Se omitió el "N x" delante porque
+    cada tono es un item separado y el número no representaba cantidad real.
+  - Botón se habilita con carrito NO vacío O con adicionales.
+  - `WHATSAPP_NUMBER` en `js/config.js` (constante única). HOY testing
+    `5491150637625` (WhatsApp personal de Gabb); productivo `5491127395984`
+    cuando Gabb avise.
+
+### Pendiente de Gabb
+- Avisar cuándo pasar `WHATSAPP_NUMBER` al número productivo `5491127395984`.
+
+### Próximo: Paso 9 — persistencia en localStorage
+Las 5 claves del PRD §5 (nombre, datos cliente, carrito en progreso, últimos 5
+pedidos, pedido frecuente). Auto-relleno del nombre en Inicio/Carrito.
+
+---
+
 ## Infra — 2026-06-03
 
 **Hosting migrado de Netlify a Cloudflare Pages** el 2026-06-03 por límite de
