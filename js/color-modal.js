@@ -37,7 +37,6 @@
   if (!bg) return;  // si el modal no está en la página, no hago nada
   const eyebrowEl   = document.getElementById('colorModalEyebrow');
   const tituloEl    = document.getElementById('colorModalTitle');
-  const toggleEl    = document.getElementById('colorModeToggle');
   const cerrarBtn   = document.getElementById('colorModalClose');
   const buscarInput = document.getElementById('colorSearch');
   const familiasEl  = document.getElementById('colorFamilies');
@@ -49,8 +48,7 @@
 
   // --- Estado interno ---
   let ctx = null;            // { line, label, palette, onSelect }
-  let modo = 'multi';        // 'multi' | 'single'
-  let seleccion = [];        // [{ code, qty }]
+  let seleccion = [];        // [{ code, qty }] (selección múltiple siempre)
   let familiaActiva = 'all';
   let termino = '';
 
@@ -62,13 +60,10 @@
     cargarPaletas().then(() => {
       const palette = (PALETAS[config.line] && PALETAS[config.line].tones) || [];
       ctx = { line: config.line, label: config.label, palette, onSelect };
-      modo = 'multi';
       seleccion = [];
       familiaActiva = 'all';
       termino = '';
       buscarInput.value = '';
-      toggleEl.querySelectorAll('button').forEach(b =>
-        b.classList.toggle('is-active', b.dataset.mode === 'multi'));
       selLabelEl.textContent = 'Tonos seleccionados';
       eyebrowEl.textContent = config.label || '';
       tituloEl.textContent = 'Elegí tu tono';
@@ -78,7 +73,8 @@
       bg.classList.add('is-open');
       bg.setAttribute('aria-hidden', 'false');
       document.body.classList.add('is-locked');
-      setTimeout(() => buscarInput.focus(), 100);
+      // No enfocamos el buscador al abrir: en el celu abría el teclado y
+      // comía espacio. El cliente toca el buscador si quiere escribir.
     });
   }
   function cerrar() {
@@ -129,7 +125,7 @@
   // --- Render: panel de tonos seleccionados (con stepper de cantidad) ---
   function renderSeleccion() {
     if (!seleccion.length) {
-      selListEl.innerHTML = `<div class="color-selected-empty">${modo === 'single' ? 'Tocá un tono.' : 'Tocá uno o más tonos.'}</div>`;
+      selListEl.innerHTML = `<div class="color-selected-empty">Tocá uno o más tonos.</div>`;
       agregarBtn.disabled = true;
       return;
     }
@@ -156,22 +152,6 @@
   }
 
   // --- Eventos ---
-  toggleEl.addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-mode]');
-    if (!btn) return;
-    modo = btn.dataset.mode;
-    toggleEl.querySelectorAll('button').forEach(b => {
-      const activo = b === btn;
-      b.classList.toggle('is-active', activo);
-      b.setAttribute('aria-selected', String(activo));
-    });
-    selLabelEl.textContent = modo === 'single' ? 'Tono seleccionado' : 'Tonos seleccionados';
-    // Si paso de varios a uno y había varios, dejo solo el último.
-    if (modo === 'single' && seleccion.length > 1) seleccion = [seleccion[seleccion.length - 1]];
-    renderGrid();
-    renderSeleccion();
-  });
-
   familiasEl.addEventListener('click', (e) => {
     const btn = e.target.closest('.color-family-chip');
     if (!btn) return;
@@ -190,12 +170,8 @@
     if (!card) return;
     const code = card.dataset.code;
     const idx = seleccion.findIndex(s => s.code === code);
-    if (modo === 'single') {
-      seleccion = idx >= 0 ? [] : [{ code, qty: 1 }];
-    } else {
-      if (idx >= 0) seleccion.splice(idx, 1);
-      else seleccion.push({ code, qty: 1 });
-    }
+    if (idx >= 0) seleccion.splice(idx, 1);
+    else seleccion.push({ code, qty: 1 });
     renderGrid();
     renderSeleccion();
   });

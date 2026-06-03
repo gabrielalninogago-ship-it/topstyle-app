@@ -614,8 +614,20 @@ body.is-locked { overflow: hidden; }   /* frena el scroll de fondo con el modal 
   color: var(--texto-tenue);
 }
 
-.color-families { display: flex; flex-wrap: wrap; gap: 5px; }
+/* Una sola fila que se desliza (clave en Coloration: 29 familias).
+   Antes se apilaba en muchos renglones y aplastaba la grilla. */
+.color-families {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 5px;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.color-families::-webkit-scrollbar { display: none; }
 .color-family-chip {
+  flex: 0 0 auto;
+  white-space: nowrap;
   padding: 4px 11px;
   border-radius: 999px;
   border: 1px solid var(--linea);
@@ -694,9 +706,9 @@ body.is-locked { overflow: hidden; }   /* frena el scroll de fondo con el modal 
 /* Panel de tonos seleccionados */
 .color-selected-panel {
   border-top: 1px solid var(--linea);
-  padding: 0.6rem 1rem;
+  padding: 0.5rem 1rem;
   background: #faf5f8;
-  max-height: 34vh;
+  max-height: 26vh;          /* compacto: que no le robe la grilla al crecer */
   display: flex;
   flex-direction: column;
 }

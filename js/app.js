@@ -100,7 +100,7 @@ document.addEventListener('alpine:init', () => {
     mostrarToast(msg) {
       this.toast = msg;
       clearTimeout(this.toastTimer);
-      this.toastTimer = setTimeout(() => { this.toast = ''; }, 1600);
+      this.toastTimer = setTimeout(() => { this.toast = ''; }, 2800);
     },
 
     // --- Helpers de datos ---
