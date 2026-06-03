@@ -64,7 +64,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 4 · build 2026-06-03 01:20</p>
+      <p class="version">Paso 5 · build 2026-06-03 01:35</p>
     </main>
   </div>
 
@@ -129,8 +129,11 @@
                   <p class="card__nombre" x-text="p.nombre"></p>
                   <p class="card__marca" x-text="p.marca"></p>
                 </div>
-                <button class="card__add" disabled
+                <button class="card__add"
                         :class="{ 'card__add--tono': p.requiereVariante }"
+                        :disabled="p.requiereVariante"
+                        @click="!p.requiereVariante && agregar(p)"
+                        :title="p.requiereVariante ? 'Elegí el tono (próximamente)' : 'Agregar al pedido'"
                         x-text="p.requiereVariante ? 'Elegir tono' : '+'"></button>
               </article>
             </template>
@@ -140,12 +143,31 @@
 
     </div>
 
-    <!-- Footer fijo: contador + ver pedido (inertes, Paso 5/7) -->
+    <!-- Footer fijo: contador + ver pedido -->
     <footer class="cat-footer">
-      <span class="cat-footer__contador">0 productos en tu pedido</span>
-      <button class="cat-footer__ver" disabled>Ver pedido</button>
+      <span class="cat-footer__contador"
+            x-text="cantidadTotal + (cantidadTotal === 1 ? ' producto' : ' productos') + ' en tu pedido'"></span>
+      <button class="cat-footer__ver" :disabled="cantidadTotal === 0"
+              @click="pantalla = 'carrito'">Ver pedido</button>
     </footer>
   </div>
+
+  <!-- ===================================================
+       PANTALLA 3: CARRITO (placeholder)
+       Se construye de verdad en el Paso 7. Por ahora confirma que el
+       botón "Ver pedido" navega y que el carrito tiene items.
+       =================================================== -->
+  <div class="contenedor" x-show="pantalla === 'carrito'" x-cloak>
+    <main class="placeholder">
+      <h2 class="placeholder__titulo">Pantalla 3 · Tu pedido</h2>
+      <p class="placeholder__texto"
+         x-text="cantidadTotal + (cantidadTotal === 1 ? ' producto' : ' productos') + ' en el pedido. Se construye en el próximo paso.'"></p>
+      <button class="btn-volver" @click="pantalla = 'catalogo'">← Seguir agregando</button>
+    </main>
+  </div>
+
+  <!-- Toast de feedback al agregar -->
+  <div class="toast" x-show="toast" x-transition.opacity x-text="toast" x-cloak></div>
 
 </body>
 </html>

@@ -466,6 +466,23 @@ body {
 }
 .cat-footer__ver:disabled { background: #d8c7d2; cursor: not-allowed; }
 
+/* ----- Toast (feedback efímero al agregar al carrito) ----- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 78px;                /* por encima del footer fijo del catálogo */
+  transform: translateX(-50%);
+  max-width: 88%;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #fff;
+  background: var(--plum);
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(90, 42, 77, 0.28);
+  z-index: 50;
+}
+
 /* =========================================================
    Desktop: la app sigue siendo una columna angosta y centrada.
    No la estiramos a todo el ancho (es una app pensada para celular).

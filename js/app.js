@@ -16,6 +16,11 @@ document.addEventListener('alpine:init', () => {
     subActivo: 'todos',        // sub-tab dentro de Beauty Color
     busqueda: '',              // término del buscador
 
+    // --- Carrito (en memoria; la persistencia es el Paso 9) ---
+    carrito: [],               // items: { id, qty, variant? }
+    toast: '',                 // mensaje efímero de feedback
+    toastTimer: null,
+
     // Tabs principales (en orden). 'todos' es el primero.
     tabs: [
       { key: 'todos',       label: 'Todos' },
@@ -42,6 +47,45 @@ document.addEventListener('alpine:init', () => {
       this.tabActivo = key;
       this.subActivo = 'todos';   // al cambiar de línea, reseteo el sub-tab
       this.busqueda = '';         // y limpio la búsqueda
+    },
+
+    // --- Carrito ---
+    // Un item se identifica por id + (código de variante si tiene). Mismo producto
+    // con distinto tono = items separados.
+    _buscarItem(id, code) {
+      return this.carrito.find(i => i.id === id && (i.variant ? i.variant.code : null) === code);
+    },
+    agregar(producto, variant = null) {
+      const code = variant ? variant.code : null;
+      const existente = this._buscarItem(producto.id, code);
+      if (existente) {
+        existente.qty += 1;
+      } else {
+        this.carrito.push(variant ? { id: producto.id, qty: 1, variant } : { id: producto.id, qty: 1 });
+      }
+      this.mostrarToast(`${producto.nombre} agregado`);
+    },
+    quitar(id, code = null) {
+      this.carrito = this.carrito.filter(i => !(i.id === id && (i.variant ? i.variant.code : null) === code));
+    },
+    cambiarCantidad(id, qty, code = null) {
+      const item = this._buscarItem(id, code);
+      if (!item) return;
+      if (qty <= 0) this.quitar(id, code);
+      else item.qty = qty;
+    },
+    get cantidadTotal() {
+      return this.carrito.reduce((acc, i) => acc + i.qty, 0);
+    },
+    productoPorId(id) {
+      return this.productos.find(p => p.id === id);
+    },
+
+    // --- Toast (feedback efímero al agregar) ---
+    mostrarToast(msg) {
+      this.toast = msg;
+      clearTimeout(this.toastTimer);
+      this.toastTimer = setTimeout(() => { this.toast = ''; }, 1600);
     },
 
     // --- Helpers de datos ---

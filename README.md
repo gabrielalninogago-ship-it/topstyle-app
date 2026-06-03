@@ -17,7 +17,7 @@ El detalle funcional completo vive en el PRD:
 
 ## Estado
 
-🚧 **En construcción.** Paso 4: Catálogo con búsqueda y filtros por tab.
+🚧 **En construcción.** Paso 5: Agregar al carrito (contador + Ver pedido).
 
 ## Hosting
 
