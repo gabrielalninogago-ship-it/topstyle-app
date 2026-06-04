@@ -1,0 +1,11 @@
+{
+  // Config de deploy para Cloudflare (wrangler deploy).
+  // El sitio vive en public/ para que el upload NO incluya .git (su historial
+  // supera el límite de 25 MiB por archivo y rompía el deploy, además de que
+  // no hay que publicar el repo). Sólo se sube el contenido de ./public.
+  "name": "topstyle-app",
+  "compatibility_date": "2026-06-04",
+  "assets": {
+    "directory": "./public"
+  }
+}
