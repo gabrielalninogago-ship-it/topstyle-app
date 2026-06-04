@@ -5,6 +5,33 @@ Rutina de cierre de sesión: grabar memorias, anotar acá el resumen, commit + p
 
 ---
 
+## Sesión 5 — 2026-06-04 (deploy confirmado + theme-color)
+
+**Deploy DESTRABADO y confirmado.** El build del commit con `public/` anduvo
+(Gabb avisó + log). El log OK muestra "Read 97 files from .../public" (antes 145
+con el `.git`), sin `Asset too large`. **URL real: https://topstyle-app.gabrielalninogago.workers.dev**
+— es un **Worker** con static assets, NO un proyecto Pages; por eso todas las
+`*.pages.dev` daban NXDOMAIN (nunca existieron). Verificado con curl: HTTP 200 y
+sirve el sitio con el marcador `.version` correcto. Memorias corregidas (decían
+`pages.dev`, erróneo).
+
+**Theme-color fucsia → plum.** Commit `6a28fae`. `#ff2ea0` → `#5a2a4d` en el
+`<meta theme-color>` (`public/index.html`) y en `theme_color` (`public/manifest.json`).
+SW bumpeado `topstyle-v13` → `v14` (cache-first: sin el bump la PWA instalada no
+tomaría el HTML nuevo). Auto-deploy verificado en vivo: producción sirve `#5a2a4d`
+y `topstyle-v14`. El `background_color #1a1a1a` (splash PWA) se dejó sin tocar.
+
+**Para ver el plum en la PWA instalada:** cerrar del todo y reabrir (o reinstalar
+si no toma el `theme_color` nuevo del manifest).
+
+### Pendiente de Gabb
+- Validar el plum en el celu (pasos 9-13 también).
+- Avisar para pasar `WHATSAPP_NUMBER` al productivo `5491127395984`
+  (`public/js/config.js`).
+- Logo liviano de Inicio; decisión de paleta (plum vs fucsia/oscuro).
+
+---
+
 ## Sesión 4 — 2026-06-04 (deploy)
 
 Sesión dedicada a por qué la app no se actualizaba. **Hallazgo:** el deploy de
