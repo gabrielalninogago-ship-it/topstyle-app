@@ -4,6 +4,5 @@
    ========================================================= */
 
 // Número de WhatsApp al que se manda el pedido (formato wa.me: sin + ni espacios).
-// Testing: número personal de Gabb. Cambiar a 5491127395984 cuando se pase a
-// producción (Gabb avisa cuándo).
-window.WHATSAPP_NUMBER = '5491150637625';
+// PRODUCTIVO (Gabb dio el OK el 2026-06-04).
+window.WHATSAPP_NUMBER = '5491127395984';
