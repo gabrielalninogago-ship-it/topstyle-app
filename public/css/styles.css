@@ -5,7 +5,21 @@
    ========================================================= */
 
 /* ----- Tipografía de marca (Poppins, self-hosted, queda offline) -----
-   Solo para títulos. El cuerpo sigue en system-ui por legibilidad y peso. */
+   Ahora en toda la app: texto en 400/500 y títulos en 600/700/800. */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/poppins-500.woff2') format('woff2');
+}
 @font-face {
   font-family: 'Poppins';
   font-style: normal;
@@ -31,6 +45,7 @@
 /* ----- Variables de color y medidas ----- */
 :root {
   --fuente-titulo: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fuente-base:   'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --plum:        #5a2a4d;   /* ancla de marca: texto de títulos, estructura */
   --plum-oscuro: #43203a;   /* hover de superficies plum */
   --fucsia:      #c4267d;   /* acento sólido medio (cuando no se puede gradiente) */
@@ -88,7 +103,7 @@ html, body { margin: 0; padding: 0; }
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--fuente-base);
   color: var(--texto);
   background: var(--fondo);
   line-height: 1.5;
@@ -333,14 +348,22 @@ body {
 .promo {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  padding: 0.9rem 1rem;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
   text-align: left;
   border-radius: var(--radio);
   text-decoration: none;
-  /* el color de fondo y de texto se setean inline según la promo */
+  box-shadow: var(--sombra-sm);
+  /* sin color_fondo: toma el gradiente de marca (.promo--marca). Con color: inline. */
 }
-.promo--link { cursor: pointer; }
+/* Promo sin color propio: gradiente de marca, coherente con el hero. */
+.promo--marca {
+  background: var(--grad-marca);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(196, 38, 125, 0.26);
+}
+.promo--link { cursor: pointer; transition: transform 0.12s ease, box-shadow 0.15s ease; }
+.promo--link:hover { transform: translateY(-1px); }
 .promo--link:active { transform: translateY(1px); }
 .promo__img {
   width: 44px;
@@ -350,8 +373,8 @@ body {
   flex-shrink: 0;
 }
 .promo__texto { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
-.promo__titulo { font-size: 0.98rem; font-weight: 700; }
-.promo__linea { font-size: 0.85rem; opacity: 0.92; }
+.promo__titulo { font-family: var(--fuente-titulo); font-size: 1rem; font-weight: 700; }
+.promo__linea { font-size: 0.85rem; opacity: 0.93; }
 
 /* ----- Checkbox "guardar como frecuente" (form del carrito) ----- */
 .campo-check {
@@ -377,10 +400,12 @@ body {
 }
 
 .footer-pdfs__titulo {
+  font-family: var(--fuente-titulo);
   font-size: 0.78rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--texto-tenue);
+  color: var(--plum);
   margin: 0 0 0.6rem;
 }
 
@@ -479,7 +504,7 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--fondo);
+  background: var(--fondo-tinte);
 }
 
 /* ----- Header sticky: volver + buscador ----- */
@@ -603,11 +628,23 @@ body {
 .cat-seccion { margin-top: 1.4rem; }
 
 .cat-seccion__titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--fuente-titulo);
   font-weight: 700;
-  font-size: 1.08rem;
+  font-size: 1.12rem;
   color: var(--plum);
   margin: 0 0 0.7rem;
+}
+/* Acento de gradiente a la izquierda del título: marca la identidad en todo el catálogo. */
+.cat-seccion__titulo::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 4px;
+  height: 1.05em;
+  border-radius: 2px;
+  background: var(--grad-marca);
 }
 
 .cat-sub { margin-bottom: 1rem; }
@@ -731,7 +768,7 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--fondo);
+  background: var(--fondo-tinte);
 }
 
 .carrito__head {

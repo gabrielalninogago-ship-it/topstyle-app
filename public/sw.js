@@ -7,7 +7,7 @@
    archivos cacheados, así el navegador descarta el caché viejo.
    ========================================================= */
 
-const CACHE = 'topstyle-v17';
+const CACHE = 'topstyle-v18';
 
 // Archivos del mismo origen que SÍ o SÍ deben quedar cacheados.
 const CORE = [
@@ -21,6 +21,8 @@ const CORE = [
   './data/paletas.json',
   './data/promos.json',
   './manifest.json',
+  './fonts/poppins-400.woff2',
+  './fonts/poppins-500.woff2',
   './fonts/poppins-600.woff2',
   './fonts/poppins-700.woff2',
   './fonts/poppins-800.woff2',

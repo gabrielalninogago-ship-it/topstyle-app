@@ -22,9 +22,9 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
   <link rel="shortcut icon" href="/favicon.ico" />
 
-  <!-- Precarga de la fuente de marca (peso del titular del hero) para que no parpadee -->
+  <!-- Precarga de la fuente de marca (texto 400 + titular 800) para que no parpadee -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-800.woff2" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-700.woff2" crossorigin />
 
   <link rel="stylesheet" href="css/styles.css" />
 
@@ -120,11 +120,11 @@
             <!-- Banners de promos (hasta 2, desde data/promos.json) -->
             <div class="promos" x-show="promosVisibles.length" x-cloak>
               <template x-for="promo in promosVisibles" :key="promo.id">
-                <a class="promo" :class="{ 'promo--link': promo.link }"
+                <a class="promo" :class="{ 'promo--link': promo.link, 'promo--marca': !promo.color_fondo }"
                    :href="promo.link || null"
                    :target="promo.link ? '_blank' : null"
                    :rel="promo.link ? 'noopener' : null"
-                   :style="`background:${promo.color_fondo || '#5a2a4d'}; color:${colorTextoPromo(promo.color_fondo)}`">
+                   :style="promo.color_fondo ? `background:${promo.color_fondo}; color:${colorTextoPromo(promo.color_fondo)}` : ''">
                   <img class="promo__img" x-show="promo.imagen" :src="promo.imagen" alt="" loading="lazy" />
                   <span class="promo__texto">
                     <strong class="promo__titulo" x-text="promo.titulo"></strong>
@@ -161,7 +161,7 @@
         </div>
       </footer>
 
-        <p class="version">Paso 13 · build 2026-06-04 rediseño hero</p>
+        <p class="version">Paso 13 · build 2026-06-04 rediseño cohesivo</p>
       </div>
     </main>
   </div>

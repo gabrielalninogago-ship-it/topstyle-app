@@ -5,7 +5,7 @@
       "titulo": "Pedí en 2 minutos",
       "texto": "Armá tu carrito y mandanoslo listo por WhatsApp.",
       "imagen": "",
-      "color_fondo": "#5a2a4d",
+      "color_fondo": "",
       "link": "",
       "activa": true,
       "valida_hasta": ""
@@ -15,7 +15,7 @@
       "titulo": "Cartas de color al día",
       "texto": "Consultá los tonos Question Coloration y Lumiplex.",
       "imagen": "",
-      "color_fondo": "#43203a",
+      "color_fondo": "",
       "link": "assets/pdfs/carta-color-question.pdf",
       "activa": true,
       "valida_hasta": ""
