@@ -4,15 +4,23 @@
   <meta charset="UTF-8" />
   <!-- viewport: la app se adapta al ancho del celular (mobile-first) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#5a2a4d" />
+  <meta name="description" content="Armá tu pedido de productos TopStyle desde el celular y mandalo listo por WhatsApp." />
   <title>TopStyle — Armá tu pedido</title>
 
-  <!-- PWA: instalable como app (Paso 12) -->
-  <link rel="manifest" href="manifest.json" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <!-- PWA: manifest, íconos y metas (pack de íconos provisto por Gabb, Paso 13) -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#ff2ea0" />
+
+  <!-- iOS Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="TopStyle" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
 
   <link rel="stylesheet" href="css/styles.css" />
 
@@ -31,6 +39,14 @@
 <!-- x-data="app": el estado y la lógica viven en js/app.js -->
 <body x-data="app">
 
+  <!-- Sin JavaScript la app no funciona (es 100% frontend dinámico). -->
+  <noscript>
+    <div class="noscript">
+      Esta app necesita JavaScript activado. Activalo en el navegador y volvé a
+      cargar la página para armar tu pedido.
+    </div>
+  </noscript>
+
   <!-- ===================================================
        PANTALLA 1: INICIO (versión primera visita)
        =================================================== -->
@@ -38,7 +54,8 @@
     <main class="inicio">
 
       <img class="inicio__logo" src="assets/topstyle-logo.png"
-           alt="TopStyle — Professional Hair Stylist Products" />
+           alt="TopStyle — Professional Hair Stylist Products"
+           width="130" height="130" />
 
       <div class="inicio__centro">
 
@@ -123,7 +140,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 12 · build 2026-06-04 PWA</p>
+      <p class="version">Paso 13 · build 2026-06-04 pulido + íconos</p>
     </main>
   </div>
 
@@ -182,7 +199,8 @@
             <template x-for="p in g.productos" :key="p.id">
               <article class="card">
                 <div class="card__foto">
-                  <img :src="p.imagen" :alt="p.nombre" loading="lazy" />
+                  <img :src="p.imagen" :alt="p.nombre" loading="lazy"
+                       @error="if (!$el.src.endsWith('placeholder.svg')) $el.src = 'assets/placeholder.svg'" />
                 </div>
                 <div class="card__info">
                   <p class="card__nombre" x-text="p.nombre"></p>
@@ -235,7 +253,8 @@
         <div class="ci">
           <div class="ci__foto">
             <img :src="ci.prod ? ci.prod.imagen : 'assets/placeholder.svg'"
-                 :alt="ci.prod ? ci.prod.nombre : ''" loading="lazy" />
+                 :alt="ci.prod ? ci.prod.nombre : ''" loading="lazy"
+                 @error="if (!$el.src.endsWith('placeholder.svg')) $el.src = 'assets/placeholder.svg'" />
           </div>
           <div class="ci__info">
             <p class="ci__nombre" x-text="ci.prod ? ci.prod.nombre : ci.id"></p>

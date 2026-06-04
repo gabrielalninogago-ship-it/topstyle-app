@@ -7,7 +7,7 @@
    archivos cacheados, así el navegador descarta el caché viejo.
    ========================================================= */
 
-const CACHE = 'topstyle-v12';
+const CACHE = 'topstyle-v13';
 
 // Archivos del mismo origen que SÍ o SÍ deben quedar cacheados.
 const CORE = [
@@ -20,9 +20,15 @@ const CORE = [
   './data/catalogo.json',
   './data/paletas.json',
   './data/promos.json',
+  './manifest.json',
+  './favicon.ico',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './manifest.json',
+  './icons/icon-192-maskable.png',
+  './icons/icon-512-maskable.png',
+  './icons/apple-touch-icon.png',
+  './icons/favicon-16.png',
+  './icons/favicon-32.png',
 ];
 
 // Alpine viene de un CDN externo: lo cacheamos aparte y sin que rompa la

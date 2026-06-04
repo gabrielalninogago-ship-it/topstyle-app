@@ -26,6 +26,18 @@
 
 html, body { margin: 0; padding: 0; }
 
+/* Mensaje cuando el navegador tiene JavaScript desactivado */
+.noscript {
+  margin: 1.5rem;
+  padding: 1rem 1.2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #7a1f3d;
+  background: #fdeef3;
+  border: 1px solid #f2c9d8;
+  border-radius: 12px;
+}
+
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--texto);
