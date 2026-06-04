@@ -76,6 +76,23 @@
               <p class="tarjeta-pedido__resumen" x-text="resumenFrecuente"></p>
               <button class="tarjeta-pedido__btn" @click="cargarFrecuente()">Cargar</button>
             </div>
+
+            <!-- Banners de promos (hasta 2, desde data/promos.json) -->
+            <div class="promos" x-show="promosVisibles.length" x-cloak>
+              <template x-for="promo in promosVisibles" :key="promo.id">
+                <a class="promo" :class="{ 'promo--link': promo.link }"
+                   :href="promo.link || null"
+                   :target="promo.link ? '_blank' : null"
+                   :rel="promo.link ? 'noopener' : null"
+                   :style="`background:${promo.color_fondo || '#5a2a4d'}; color:${colorTextoPromo(promo.color_fondo)}`">
+                  <img class="promo__img" x-show="promo.imagen" :src="promo.imagen" alt="" loading="lazy" />
+                  <span class="promo__texto">
+                    <strong class="promo__titulo" x-text="promo.titulo"></strong>
+                    <span class="promo__linea" x-text="promo.texto"></span>
+                  </span>
+                </a>
+              </template>
+            </div>
           </div>
         </template>
       </div>
@@ -99,7 +116,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 10 · build 2026-06-04 inicio recurrente</p>
+      <p class="version">Paso 11 · build 2026-06-04 promos</p>
     </main>
   </div>
 

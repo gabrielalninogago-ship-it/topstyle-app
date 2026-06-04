@@ -38,6 +38,26 @@ URL pública, el deploy automático anduvo.
 > hubo que comprimir `carta-color-question.pdf` y `catalogo-beauty.pdf` con
 > Ghostscript (modo `/ebook`).
 
+## Editar promos
+
+Los banners de Inicio salen de `data/promos.json`. Para cambiarlos: editás ese
+archivo, hacés commit + push, y el deploy automático los actualiza en 1-2 min.
+
+- La app muestra **hasta 2** banners (los primeros activos y no vencidos).
+- Cada promo:
+  - `id` — string único.
+  - `titulo` / `texto` — título y una línea de descripción.
+  - `imagen` — URL opcional (miniatura a la izquierda; dejar `""` si no hay).
+  - `color_fondo` — hex del fondo (ej. `"#5a2a4d"`). El color del texto se
+    calcula solo según el brillo, así siempre se lee.
+  - `link` — URL opcional; si está, el banner es clickeable y abre en pestaña
+    nueva. Dejar `""` para un banner informativo sin link.
+  - `activa` — `true`/`false`. En `false` no se muestra.
+  - `valida_hasta` — fecha ISO opcional (ej. `"2026-07-31"`); pasada esa fecha
+    la promo deja de mostrarse sola. Dejar `""` para que no venza.
+
+Las promos aparecen solo a clientes que ya usaron la app (Inicio "ya estuvo").
+
 ## Cómo trabajamos
 
 - De a un módulo por vez, validando con Gabb antes de avanzar.

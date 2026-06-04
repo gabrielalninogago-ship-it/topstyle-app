@@ -42,6 +42,9 @@ document.addEventListener('alpine:init', () => {
     ultimoPedido: null,        // primer elemento de topstyle_ultimos_pedidos
     pedidoFrecuente: null,     // topstyle_pedido_frecuente
 
+    // --- Promos (Paso 11) ---
+    promos: [],                // se llena desde data/promos.json
+
     // Tabs principales (en orden). 'todos' es el primero.
     tabs: [
       { key: 'todos',       label: 'Todos' },
@@ -75,6 +78,15 @@ document.addEventListener('alpine:init', () => {
         this.productos = data.productos || [];
       } catch (e) {
         console.error('No se pudo cargar el catálogo:', e);
+      }
+
+      // Promos: si falla la carga, la app sigue sin banners (no es crítico).
+      try {
+        const resp = await fetch('data/promos.json');
+        const data = await resp.json();
+        this.promos = data.promos || [];
+      } catch (e) {
+        console.error('No se pudieron cargar las promos:', e);
       }
     },
 
@@ -135,6 +147,27 @@ document.addEventListener('alpine:init', () => {
     },
     cargarUltimo() { this._cargarEnCarrito(this.ultimoPedido, true); },
     cargarFrecuente() { this._cargarEnCarrito(this.pedidoFrecuente, false); },
+
+    // --- Promos (Paso 11) ---
+    // Solo las activas, no vencidas, y como máximo 2 (PRD §6).
+    get promosVisibles() {
+      const hoy = new Date();
+      return (this.promos || [])
+        .filter(p => p.activa)
+        .filter(p => !p.valida_hasta || new Date(p.valida_hasta) >= hoy)
+        .slice(0, 2);
+    },
+    // Elige texto blanco u oscuro según el brillo del color de fondo, para que
+    // el banner siempre se lea sin importar el color que cargue Gabb.
+    colorTextoPromo(hex) {
+      const h = (hex || '').replace('#', '');
+      if (h.length < 6) return '#ffffff';
+      const r = parseInt(h.slice(0, 2), 16);
+      const g = parseInt(h.slice(2, 4), 16);
+      const b = parseInt(h.slice(4, 6), 16);
+      const luminancia = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      return luminancia > 0.6 ? '#2b2230' : '#ffffff';
+    },
 
     // --- Selección de tabs ---
     seleccionarTab(key) {

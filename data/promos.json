@@ -1,0 +1,24 @@
+{
+  "promos": [
+    {
+      "id": "pedi-rapido",
+      "titulo": "Pedí en 2 minutos",
+      "texto": "Armá tu carrito y mandanoslo listo por WhatsApp.",
+      "imagen": "",
+      "color_fondo": "#5a2a4d",
+      "link": "",
+      "activa": true,
+      "valida_hasta": ""
+    },
+    {
+      "id": "cartas-color",
+      "titulo": "Cartas de color al día",
+      "texto": "Consultá los tonos Question Coloration y Lumiplex.",
+      "imagen": "",
+      "color_fondo": "#43203a",
+      "link": "assets/pdfs/carta-color-question.pdf",
+      "activa": true,
+      "valida_hasta": ""
+    }
+  ]
+}
