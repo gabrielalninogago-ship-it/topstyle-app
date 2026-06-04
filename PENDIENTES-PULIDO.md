@@ -30,5 +30,5 @@
       catálogo, banners de promo, instalación e ícono PWA.
 
 ## Recordatorio operativo
-- [ ] Cambiar `WHATSAPP_NUMBER` en `js/config.js` de testing (`5491150637625`)
-      al productivo (`5491127395984`) cuando Gabb avise.
+- [x] `WHATSAPP_NUMBER` en productivo `5491127395984` (Gabb dio el OK, 2026-06-04,
+      sesión 5). Verificado en producción. SW a `topstyle-v15`.

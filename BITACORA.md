@@ -24,11 +24,13 @@ y `topstyle-v14`. El `background_color #1a1a1a` (splash PWA) se dejó sin tocar.
 **Para ver el plum en la PWA instalada:** cerrar del todo y reabrir (o reinstalar
 si no toma el `theme_color` nuevo del manifest).
 
+**WhatsApp a PRODUCTIVO.** Gabb dio el OK y validó el plum en el celu. Commit
+`a3ec71c`: `WHATSAPP_NUMBER` `5491150637625` → `5491127395984` en
+`public/js/config.js`. SW `v14` → `v15` (config.js está en el CORE cacheado).
+Verificado en producción: sirve el número productivo y `topstyle-v15`.
+
 ### Pendiente de Gabb
-- Validar el plum en el celu (pasos 9-13 también).
-- Avisar para pasar `WHATSAPP_NUMBER` al productivo `5491127395984`
-  (`public/js/config.js`).
-- Logo liviano de Inicio; decisión de paleta (plum vs fucsia/oscuro).
+- Logo liviano de Inicio; decisión de paleta (plum vs fucsia/oscuro); copy de Inicio.
 
 ---
 
