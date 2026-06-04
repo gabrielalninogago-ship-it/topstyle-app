@@ -1,0 +1,12 @@
+# Archivos que Cloudflare/wrangler NO debe publicar como parte del sitio.
+# Sintaxis tipo .gitignore. Lo crítico es excluir .git: su historial (.pack)
+# supera el límite de 25 MiB por archivo y rompía el deploy.
+
+.git
+node_modules
+.wrangler
+wrangler.jsonc
+wrangler.toml
+
+# Documentación interna (no es parte de la app pública)
+*.md
