@@ -32,6 +32,36 @@ pedidos, pedido frecuente). Auto-relleno del nombre en Inicio/Carrito.
 
 ---
 
+## Sesión 3 — 2026-06-04
+
+### Hecho (codeado + deployado, pendiente de validar en celu)
+- **Paso 9 — Persistencia en localStorage.** 3 claves activas: `topstyle_nombre`
+  (watcher), `topstyle_carrito_actual` (persiste en cada mutación, `_persistirCarrito`),
+  `topstyle_ultimos_pedidos` (al enviar, tope 5, más nuevo primero). `cliente_data`
+  descartada (el form simplificado del Paso 8 dejó solo el nombre). Tras enviar:
+  vacía el carrito y vuelve a Inicio. Helpers `_leerLS`/`_guardarLS` con try/catch
+  para no romper en incógnito.
+- **Paso 10 — Inicio "ya estuvo antes".** Saludo personalizado + "Nuevo pedido";
+  tarjeta "Repetir tu último pedido" (resumen de 3 items + "y N más", carga con
+  notas); tarjeta "Tu pedido frecuente" + checkbox en el carrito para guardarlo
+  (carga sin notas, es plantilla). 5ta clave `topstyle_pedido_frecuente` lista.
+  El modo recurrente se fija con un snapshot al cargar (`recurrente`), no reactivo
+  al nombre, para que tipearlo la primera vez no dé vuelta la pantalla.
+
+### Decisiones de la sesión
+- Tras enviar un pedido se vuelve a Inicio con el carrito vacío.
+- `cliente_data` (PRD §5) se descarta: el form ya no pide whatsapp/tipo/zona.
+- Cargar "último pedido" trae las notas; cargar "frecuente" no (es plantilla).
+
+### Pendiente de Gabb
+- Validar pasos 9 y 10 en el celu.
+- Avisar cuándo pasar `WHATSAPP_NUMBER` al productivo `5491127395984`.
+
+### Próximo: Paso 11 — promos
+`promos.json` en el repo + hasta 2 banners en Inicio (PRD §6).
+
+---
+
 ## Infra — 2026-06-03
 
 **Hosting migrado de Netlify a Cloudflare Pages** el 2026-06-03 por límite de
