@@ -7,7 +7,7 @@
    archivos cacheados, así el navegador descarta el caché viejo.
    ========================================================= */
 
-const CACHE = 'topstyle-v15';
+const CACHE = 'topstyle-v16';
 
 // Archivos del mismo origen que SÍ o SÍ deben quedar cacheados.
 const CORE = [

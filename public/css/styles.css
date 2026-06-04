@@ -6,15 +6,39 @@
 
 /* ----- Variables de color y medidas ----- */
 :root {
-  --plum:        #5a2a4d;   /* acento principal (botón, títulos) */
-  --plum-oscuro: #43203a;   /* hover del botón */
+  --plum:        #5a2a4d;   /* ancla de marca: texto de títulos, estructura */
+  --plum-oscuro: #43203a;   /* hover de superficies plum */
+  --fucsia:      #c4267d;   /* acento sólido medio (cuando no se puede gradiente) */
+  --coral:       #ff7a5c;   /* lift cálido del gradiente */
+
+  /* Gradiente firma de la marca (sacado del ícono: plum -> fucsia -> coral).
+     Se usa SOLO en lo que mueve la compra: hero, CTAs y estados activos. */
+  --grad-marca:       linear-gradient(120deg, #7b2a6b 0%, #c4267d 52%, #ff7a5c 112%);
+  --grad-marca-hover: linear-gradient(120deg, #872f76 0%, #d12d88 52%, #ff8a6f 112%);
+
   --texto:       #2b2230;   /* texto principal */
   --texto-suave: #6b5f68;   /* texto secundario */
   --texto-tenue: #9c8f98;   /* texto muy suave / deshabilitado */
   --fondo:       #ffffff;   /* fondo de la app */
+  --fondo-tinte: #fbf5f9;   /* tinte de marca muy suave para superficies */
   --linea:       #ece6ea;   /* bordes suaves */
-  --radio:       14px;      /* redondeo estándar */
+  --radio:       16px;      /* redondeo estándar */
   --ancho-max:   460px;     /* ancho máximo de la columna (mobile-first) */
+
+  /* Sombras con tinte de marca: dan profundidad y sensación premium. */
+  --sombra-sm:  0 2px 8px rgba(90, 42, 77, 0.06);
+  --sombra-md:  0 10px 30px rgba(123, 42, 107, 0.12);
+  --sombra-cta: 0 8px 22px rgba(196, 38, 125, 0.30);
+}
+
+/* Texto pintado con el gradiente de marca (para títulos de impacto).
+   No se usa en textos con emoji: algunos navegadores recortan el emoji. */
+.grad-text {
+  background: var(--grad-marca);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--fucsia);   /* fallback si no soporta background-clip */
 }
 
 /* ----- Reset mínimo ----- */
@@ -70,9 +94,11 @@ body {
 /* Logo arriba */
 .inicio__logo {
   display: block;
-  width: 130px;
+  width: 124px;
   height: auto;
-  margin: 0.5rem auto 1.5rem;
+  margin: 0.5rem auto 1.4rem;
+  border-radius: 22px;
+  box-shadow: var(--sombra-md);
 }
 
 /* Bloque central: saludo + propuesta + nombre + botón */
@@ -86,16 +112,37 @@ body {
 }
 
 .inicio__saludo {
-  font-size: 1.7rem;
-  font-weight: 700;
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   color: var(--plum);
   margin: 0;
 }
 
 .inicio__propuesta {
-  font-size: 1.02rem;
+  font-size: 1.05rem;
   color: var(--texto-suave);
-  margin: 0 0 1.4rem;
+  margin: 0.55rem 0 1rem;
+}
+
+/* Chips de confianza bajo la propuesta (primera visita): refuerzan que es
+   rápido, profesional y sin fricción. Empujan a empezar el pedido. */
+.inicio__confianza {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0 0 1.5rem;
+}
+.inicio__chip {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--plum);
+  background: var(--fondo-tinte);
+  border: 1px solid var(--linea);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
 }
 
 /* Campo "¿Cómo te llamamos?" */
@@ -126,23 +173,26 @@ body {
 .campo-nombre__input:focus { border-color: var(--plum); }
 .campo-nombre__input::placeholder { color: var(--texto-tenue); }
 
-/* Botón principal grande */
+/* Botón principal grande: el CTA de conversión. Gradiente de marca + elevación
+   para que "pida" ser tocado. */
 .btn-principal {
   display: block;
   width: 100%;
-  padding: 1rem 1.25rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+  padding: 1.05rem 1.25rem;
+  font-size: 1.12rem;
+  font-weight: 700;
   font-family: inherit;
   color: #fff;
-  background: var(--plum);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+  background: var(--grad-marca);
   border: none;
   border-radius: var(--radio);
   cursor: pointer;
-  transition: background 0.15s ease;
+  box-shadow: var(--sombra-cta);
+  transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
-.btn-principal:hover { background: var(--plum-oscuro); }
-.btn-principal:active { transform: translateY(1px); }
+.btn-principal:hover { filter: brightness(1.04); box-shadow: 0 10px 28px rgba(196, 38, 125, 0.40); }
+.btn-principal:active { transform: translateY(1px); box-shadow: var(--sombra-sm); }
 
 /* Bloque interno de Inicio (primera visita / ya estuvo). Sin gap propio para no
    alterar el espaciado por márgenes que ya tenía la primera visita. */
@@ -150,16 +200,27 @@ body {
 
 /* ----- Tarjetas de acceso rápido en Inicio (último pedido / frecuente) ----- */
 .tarjeta-pedido {
+  position: relative;
   margin-top: 1rem;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 1.15rem;
   text-align: left;
-  background: #faf5f8;
+  background: var(--fondo-tinte);
   border: 1px solid var(--linea);
   border-radius: var(--radio);
+  box-shadow: var(--sombra-sm);
+  overflow: hidden;
+}
+/* Barra de gradiente a la izquierda: marca de marca + jerarquía visual. */
+.tarjeta-pedido::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--grad-marca);
 }
 .tarjeta-pedido__titulo {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.02rem;
+  font-weight: 700;
   color: var(--plum);
   margin: 0 0 0.35rem;
 }
@@ -251,27 +312,33 @@ body {
   gap: 0.5rem;
 }
 
-/* Cada PDF es un "link" deshabilitado mientras no tengamos el archivo */
+/* Links a los catálogos y cartas de color (PDFs reales ya hospedados).
+   Se ven activos e invitantes: refuerzan que hay material profesional a mano. */
 .pdf-link {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  padding: 0.7rem 0.9rem;
+  padding: 0.72rem 0.9rem;
   font-size: 0.92rem;
+  font-weight: 500;
   font-family: inherit;
   text-align: left;
-  color: var(--texto-tenue);
-  background: #faf8f9;
+  text-decoration: none;
+  color: var(--texto);
+  background: var(--fondo-tinte);
   border: 1px solid var(--linea);
   border-radius: 10px;
-  cursor: not-allowed;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
+.pdf-link:hover { border-color: var(--fucsia); box-shadow: var(--sombra-sm); }
 
 .pdf-link__estado {
   font-size: 0.78rem;
-  color: var(--texto-tenue);
+  font-weight: 700;
+  color: var(--fucsia);
   white-space: nowrap;
 }
 
@@ -419,7 +486,8 @@ body {
 }
 .cat-tab.is-active {
   color: #fff;
-  background: var(--plum);
+  background: var(--grad-marca);
+  box-shadow: var(--sombra-sm);
 }
 
 /* ----- Sub-tabs de Beauty Color: como los tabs pero NO sticky ----- */
@@ -436,7 +504,7 @@ body {
 }
 .cat-subtab.is-active {
   color: #fff;
-  background: var(--plum);
+  background: var(--grad-marca);
 }
 
 /* ----- Estado vacío (búsqueda sin coincidencias) ----- */
@@ -482,10 +550,13 @@ body {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--linea);
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   background: #fff;
+  box-shadow: var(--sombra-sm);
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
 }
+.card:hover { transform: translateY(-2px); box-shadow: var(--sombra-md); }
 
 .card__foto {
   aspect-ratio: 1 / 1;
@@ -520,16 +591,19 @@ body {
 
 .card__add {
   margin: 0.45rem 0.6rem 0.6rem;
-  padding: 0.45rem;
+  padding: 0.5rem;
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: inherit;
   color: #fff;
-  background: var(--plum);
+  background: var(--grad-marca);
   border: none;
   border-radius: 9px;
   cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
 }
+.card__add:hover { filter: brightness(1.05); }
+.card__add:active { transform: translateY(1px); }
 .card__add--tono { font-size: 0.82rem; }
 /* Inerte en el Paso 3 (se conecta en el Paso 5/6). */
 .card__add:disabled { background: #d8c7d2; cursor: not-allowed; }
@@ -552,17 +626,18 @@ body {
   color: var(--texto-suave);
 }
 .cat-footer__ver {
-  padding: 0.6rem 1.1rem;
+  padding: 0.65rem 1.2rem;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: inherit;
   color: #fff;
-  background: var(--plum);
+  background: var(--grad-marca);
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  box-shadow: var(--sombra-cta);
 }
-.cat-footer__ver:disabled { background: #d8c7d2; cursor: not-allowed; }
+.cat-footer__ver:disabled { background: #d8c7d2; box-shadow: none; cursor: not-allowed; }
 
 /* =========================================================
    Pantalla 3: Carrito
@@ -754,9 +829,9 @@ body {
   font-size: 0.9rem;
   text-align: center;
   color: #fff;
-  background: var(--plum);
+  background: var(--grad-marca);
   border-radius: 999px;
-  box-shadow: 0 6px 20px rgba(90, 42, 77, 0.28);
+  box-shadow: 0 6px 20px rgba(196, 38, 125, 0.30);
   z-index: 50;
 }
 
@@ -935,7 +1010,7 @@ body.is-locked { overflow: hidden; }   /* frena el scroll de fondo con el modal 
   cursor: pointer;
   font-family: inherit;
 }
-.color-family-chip.is-active { background: var(--plum); border-color: var(--plum); color: #fff; }
+.color-family-chip.is-active { background: var(--grad-marca); border-color: transparent; color: #fff; }
 
 .color-grid {
   flex: 1;
@@ -1081,8 +1156,8 @@ body.is-locked { overflow: hidden; }   /* frena el scroll de fondo con el modal 
 }
 .btn--ghost { background: #fff; border: 1.5px solid var(--linea); color: var(--texto-suave); }
 .btn--ghost:hover { border-color: var(--plum); color: var(--plum); }
-.btn--primary { background: var(--plum); border: none; color: #fff; }
-.btn--primary:disabled { background: #d8c7d2; cursor: not-allowed; }
+.btn--primary { background: var(--grad-marca); border: none; color: #fff; box-shadow: var(--sombra-cta); }
+.btn--primary:disabled { background: #d8c7d2; box-shadow: none; cursor: not-allowed; }
 
 /* En desktop el modal es una tarjeta centrada, no pantalla completa. */
 @media (min-width: 600px) {
@@ -1105,6 +1180,6 @@ body.is-locked { overflow: hidden; }   /* frena el scroll de fondo con el modal 
     min-height: auto;
     border: 1px solid var(--linea);
     border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(90, 42, 77, 0.06);
+    box-shadow: var(--sombra-md);
   }
 }

@@ -62,8 +62,15 @@
         <!-- PRIMERA VISITA: sin nombre ni historial guardado -->
         <template x-if="!recurrente">
           <div class="inicio__bloque">
-            <h1 class="inicio__saludo">Bienvenido a TopStyle</h1>
-            <p class="inicio__propuesta">Armá tu pedido en 2 minutos y mandánoslo listo por WhatsApp.</p>
+            <h1 class="inicio__saludo grad-text">Bienvenido a TopStyle</h1>
+            <p class="inicio__propuesta">Armá tu pedido de productos profesionales y mandánoslo listo por WhatsApp.</p>
+
+            <!-- Chips de confianza: rápido, profesional y sin fricción. -->
+            <div class="inicio__confianza">
+              <span class="inicio__chip">+80 productos profesionales</span>
+              <span class="inicio__chip">Listo en 2 minutos</span>
+              <span class="inicio__chip">Atención directa</span>
+            </div>
 
             <!-- Campo opcional de nombre. Persiste en localStorage (Paso 9). -->
             <div class="campo-nombre">
@@ -73,7 +80,7 @@
             </div>
 
             <button class="btn-principal" @click="pantalla = 'catalogo'">
-              Empezar pedido
+              Empezar mi pedido
             </button>
           </div>
         </template>
@@ -140,7 +147,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 13 · build 2026-06-04 whatsapp productivo</p>
+      <p class="version">Paso 13 · build 2026-06-04 rediseño marca</p>
     </main>
   </div>
 
