@@ -7,6 +7,13 @@
   <meta name="theme-color" content="#5a2a4d" />
   <title>TopStyle — Armá tu pedido</title>
 
+  <!-- PWA: instalable como app (Paso 12) -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="TopStyle" />
+
   <link rel="stylesheet" href="css/styles.css" />
 
   <!-- Configuración global (WHATSAPP_NUMBER). Va primero para que app.js la lea. -->
@@ -116,7 +123,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 11 · build 2026-06-04 promos</p>
+      <p class="version">Paso 12 · build 2026-06-04 PWA</p>
     </main>
   </div>
 
@@ -334,6 +341,17 @@
 
   <!-- Toast de feedback al agregar -->
   <div class="toast" x-show="toast" x-transition.opacity x-text="toast" x-cloak></div>
+
+  <!-- Registro del service worker (PWA). Tras cargar, para no competir con el
+       render inicial. Si falla, la app funciona igual (solo sin offline). -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .catch((e) => console.error('Service worker no registrado:', e));
+      });
+    }
+  </script>
 
 </body>
 </html>
