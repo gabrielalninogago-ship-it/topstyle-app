@@ -22,6 +22,10 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
   <link rel="shortcut icon" href="/favicon.ico" />
 
+  <!-- Precarga de la fuente de marca (peso del titular del hero) para que no parpadee -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-800.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-700.woff2" crossorigin />
+
   <link rel="stylesheet" href="css/styles.css" />
 
   <!-- Configuración global (WHATSAPP_NUMBER). Va primero para que app.js la lea. -->
@@ -53,47 +57,52 @@
   <div class="contenedor" x-show="pantalla === 'inicio'">
     <main class="inicio">
 
-      <img class="inicio__logo" src="assets/topstyle-logo.png"
-           alt="TopStyle — Professional Hair Stylist Products"
-           width="130" height="130" />
-
-      <div class="inicio__centro">
+      <!-- HERO: bloque superior con gradiente de marca. Es lo primero que ve el
+           cliente; concentra logo + propuesta + CTA para empujar a empezar. -->
+      <section class="hero">
+        <img class="hero__logo" src="assets/topstyle-logo.png"
+             alt="TopStyle — Professional Hair Stylist Products"
+             width="400" height="400" />
 
         <!-- PRIMERA VISITA: sin nombre ni historial guardado -->
         <template x-if="!recurrente">
-          <div class="inicio__bloque">
-            <h1 class="inicio__saludo grad-text">Bienvenido a TopStyle</h1>
-            <p class="inicio__propuesta">Armá tu pedido de productos profesionales y mandánoslo listo por WhatsApp.</p>
-
-            <!-- Chips de confianza: rápido, profesional y sin fricción. -->
-            <div class="inicio__confianza">
-              <span class="inicio__chip">+80 productos profesionales</span>
-              <span class="inicio__chip">Listo en 2 minutos</span>
-              <span class="inicio__chip">Atención directa</span>
-            </div>
+          <div class="hero__bloque">
+            <h1 class="hero__titulo">Tu pedido, listo en 2 minutos.</h1>
+            <p class="hero__sub">Elegí entre +80 productos profesionales y mandalo por WhatsApp, sin vueltas.</p>
 
             <!-- Campo opcional de nombre. Persiste en localStorage (Paso 9). -->
-            <div class="campo-nombre">
+            <div class="campo-nombre campo-nombre--hero">
               <label class="campo-nombre__label" for="nombre">¿Cómo te llamamos?</label>
               <input class="campo-nombre__input" id="nombre" type="text"
                      x-model="nombre" placeholder="Tu nombre (opcional)" autocomplete="off" />
             </div>
 
-            <button class="btn-principal" @click="pantalla = 'catalogo'">
-              Empezar mi pedido
+            <button class="btn-hero" @click="pantalla = 'catalogo'">
+              Empezar mi pedido →
             </button>
+            <p class="hero__reaseguro">Sin compromiso · Te responde una persona, no un bot</p>
           </div>
         </template>
 
-        <!-- YA ESTUVO ANTES: saludo personalizado + accesos rápidos (Paso 10) -->
+        <!-- YA ESTUVO ANTES: saludo personalizado (Paso 10) -->
+        <template x-if="recurrente">
+          <div class="hero__bloque">
+            <h1 class="hero__titulo hero__titulo--saludo" x-text="saludo"></h1>
+            <p class="hero__sub">¿Armamos tu próximo pedido?</p>
+            <button class="btn-hero" @click="pantalla = 'catalogo'">
+              Nuevo pedido →
+            </button>
+          </div>
+        </template>
+      </section>
+
+      <!-- CUERPO: sobre fondo claro. Accesos rápidos (recurrente), prueba social
+           y catálogos. -->
+      <div class="inicio__cuerpo">
+
+        <!-- Accesos rápidos del cliente recurrente -->
         <template x-if="recurrente">
           <div class="inicio__bloque">
-            <h1 class="inicio__saludo" x-text="saludo"></h1>
-
-            <button class="btn-principal" @click="pantalla = 'catalogo'">
-              Nuevo pedido
-            </button>
-
             <!-- Repetir el último pedido enviado -->
             <div class="tarjeta-pedido" x-show="ultimoPedido" x-cloak>
               <h2 class="tarjeta-pedido__titulo">Repetir tu último pedido</h2>
@@ -126,7 +135,12 @@
             </div>
           </div>
         </template>
-      </div>
+
+        <!-- Prueba social: feedback real cualitativo (sin cifras inventadas). -->
+        <div class="resena">
+          <div class="resena__estrellas" aria-hidden="true">★★★★★</div>
+          <p class="resena__texto">"Quienes ya la probaron coinciden: arman el pedido más rápido, sin errores y sin vueltas. Quedaron muy contentos."</p>
+        </div>
 
       <!-- Footer: links a los PDFs (ya hospedados en el repo) -->
       <footer class="footer-pdfs">
@@ -147,7 +161,8 @@
         </div>
       </footer>
 
-      <p class="version">Paso 13 · build 2026-06-04 rediseño marca</p>
+        <p class="version">Paso 13 · build 2026-06-04 rediseño hero</p>
+      </div>
     </main>
   </div>
 
@@ -304,15 +319,19 @@
 
     </div>
 
-    <!-- Footer: contador + enviar por WhatsApp -->
+    <!-- Footer: contador + enviar por WhatsApp (CTA grande, full-width) -->
     <footer class="carrito__foot" x-cloak>
       <span class="carrito__contador" x-show="carrito.length > 0"
-            x-text="cantidadTotal + (cantidadTotal === 1 ? ' producto' : ' productos')"></span>
+            x-text="cantidadTotal + (cantidadTotal === 1 ? ' producto en tu pedido' : ' productos en tu pedido')"></span>
       <button class="carrito__enviar" :disabled="!puedeEnviar"
               @click="enviarWhatsApp()"
               :title="puedeEnviar ? 'Abrir WhatsApp con el pedido' : 'Agregá productos o escribí algún adicional'">
-        Enviar por WhatsApp
+        <svg class="carrito__enviar-icono" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+          <path d="M17.5 14.4c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5 4.4.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3z M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z"/>
+        </svg>
+        Enviar pedido por WhatsApp
       </button>
+      <p class="carrito__reaseguro" x-show="puedeEnviar" x-cloak>Te responde una persona, no un bot · Sin compromiso</p>
     </footer>
   </div>
 

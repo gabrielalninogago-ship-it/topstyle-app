@@ -24,3 +24,6 @@ desktop.ini
 # Variables de entorno (no aplica hoy porque no hay backend, pero por las dudas)
 .env
 .env.local
+
+# Respaldo local del logo original (no se deploya)
+topstyle-logo-original.png.bak

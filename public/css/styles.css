@@ -4,8 +4,33 @@
    Look minimal, mobile-first, fuente del sistema (sin fuentes externas).
    ========================================================= */
 
+/* ----- Tipografía de marca (Poppins, self-hosted, queda offline) -----
+   Solo para títulos. El cuerpo sigue en system-ui por legibilidad y peso. */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/poppins-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/poppins-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/fonts/poppins-800.woff2') format('woff2');
+}
+
 /* ----- Variables de color y medidas ----- */
 :root {
+  --fuente-titulo: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --plum:        #5a2a4d;   /* ancla de marca: texto de títulos, estructura */
   --plum-oscuro: #43203a;   /* hover de superficies plum */
   --fucsia:      #c4267d;   /* acento sólido medio (cuando no se puede gradiente) */
@@ -78,7 +103,8 @@ body {
   min-height: 100dvh;            /* alto real del viewport en mobile */
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 1.25rem 1rem;
+  padding: 0;                    /* el hero llega a los bordes; el cuerpo trae su padding */
+  overflow: hidden;              /* recorta el hero a las esquinas redondeadas en desktop */
 }
 
 /* =========================================================
@@ -91,58 +117,95 @@ body {
   flex-direction: column;
 }
 
-/* Logo arriba */
-.inicio__logo {
-  display: block;
-  width: 124px;
-  height: auto;
-  margin: 0.5rem auto 1.4rem;
-  border-radius: 22px;
+/* ----- HERO: bloque superior con gradiente de marca ----- */
+.hero {
+  position: relative;
+  background: var(--grad-marca);
+  color: #fff;
+  text-align: center;
+  padding: 1.9rem 1.4rem 2.1rem;
+  border-radius: 0 0 30px 30px;
   box-shadow: var(--sombra-md);
 }
+.hero__logo {
+  display: block;
+  width: 88px;
+  height: auto;
+  margin: 0 auto 1rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+}
+.hero__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: 1.95rem;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
+}
+.hero__titulo--saludo { font-size: 1.8rem; }
+.hero__sub {
+  font-size: 1.02rem;
+  line-height: 1.45;
+  opacity: 0.96;
+  margin: 0.6rem 0 1.3rem;
+}
+.hero__reaseguro {
+  font-size: 0.8rem;
+  opacity: 0.92;
+  margin: 0.85rem 0 0;
+}
 
-/* Bloque central: saludo + propuesta + nombre + botón */
-.inicio__centro {
+/* CTA del hero: botón blanco sobre el gradiente = máximo contraste y "click". */
+.btn-hero {
+  display: block;
+  width: 100%;
+  padding: 1.05rem 1.25rem;
+  font-family: var(--fuente-titulo);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--plum);
+  background: #fff;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+}
+.btn-hero:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28); }
+.btn-hero:active { transform: translateY(1px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); }
+
+/* Cuerpo de Inicio bajo el hero (fondo claro): accesos rápidos, reseña, footer. */
+.inicio__cuerpo {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding: 1.25rem 1.25rem 1rem;
+}
+
+/* Tarjeta de prueba social (reseña cualitativa real). */
+.resena {
+  margin-top: 1.3rem;
+  padding: 1.1rem 1.2rem;
   text-align: center;
-  gap: 0.4rem;
-}
-
-.inicio__saludo {
-  font-size: 1.85rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  color: var(--plum);
-  margin: 0;
-}
-
-.inicio__propuesta {
-  font-size: 1.05rem;
-  color: var(--texto-suave);
-  margin: 0.55rem 0 1rem;
-}
-
-/* Chips de confianza bajo la propuesta (primera visita): refuerzan que es
-   rápido, profesional y sin fricción. Empujan a empezar el pedido. */
-.inicio__confianza {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.4rem;
-  margin: 0 0 1.5rem;
-}
-.inicio__chip {
-  font-size: 0.76rem;
-  font-weight: 600;
-  color: var(--plum);
   background: var(--fondo-tinte);
   border: 1px solid var(--linea);
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
+  border-radius: var(--radio);
+  box-shadow: var(--sombra-sm);
+}
+.resena__estrellas {
+  color: #f5a623;
+  font-size: 1.05rem;
+  letter-spacing: 3px;
+  margin-bottom: 0.45rem;
+}
+.resena__texto {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--texto);
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* Campo "¿Cómo te llamamos?" */
@@ -172,6 +235,20 @@ body {
 }
 .campo-nombre__input:focus { border-color: var(--plum); }
 .campo-nombre__input::placeholder { color: var(--texto-tenue); }
+
+/* Variante del campo de nombre dentro del hero (sobre el gradiente oscuro). */
+.campo-nombre--hero { margin-bottom: 0.9rem; }
+.campo-nombre--hero .campo-nombre__label { color: rgba(255, 255, 255, 0.92); }
+.campo-nombre--hero .campo-nombre__input {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.campo-nombre--hero .campo-nombre__input::placeholder { color: rgba(255, 255, 255, 0.72); }
+.campo-nombre--hero .campo-nombre__input:focus {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.24);
+}
 
 /* Botón principal grande: el CTA de conversión. Gradiente de marca + elevación
    para que "pida" ser tocado. */
@@ -219,6 +296,7 @@ body {
   background: var(--grad-marca);
 }
 .tarjeta-pedido__titulo {
+  font-family: var(--fuente-titulo);
   font-size: 1.02rem;
   font-weight: 700;
   color: var(--plum);
@@ -365,6 +443,8 @@ body {
 }
 
 .placeholder__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
   font-size: 1.3rem;
   color: var(--plum);
   margin: 0;
@@ -523,7 +603,9 @@ body {
 .cat-seccion { margin-top: 1.4rem; }
 
 .cat-seccion__titulo {
-  font-size: 1.05rem;
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: 1.08rem;
   color: var(--plum);
   margin: 0 0 0.7rem;
 }
@@ -664,7 +746,7 @@ body {
   background: var(--fondo);
   border-bottom: 1px solid var(--linea);
 }
-.carrito__titulo { font-size: 1.2rem; font-weight: 700; color: var(--plum); margin: 0; }
+.carrito__titulo { font-family: var(--fuente-titulo); font-size: 1.25rem; font-weight: 700; color: var(--plum); margin: 0; }
 .carrito__seguir {
   padding: 0.45rem 0.8rem;
   font-size: 0.85rem;
@@ -771,26 +853,37 @@ body {
   bottom: 0;
   z-index: 20;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
+  flex-direction: column;
+  gap: 0.45rem;
   padding: 0.8rem 1rem;
   background: var(--fondo);
   border-top: 1px solid var(--linea);
 }
-.carrito__contador { font-size: 0.9rem; color: var(--texto-suave); }
+.carrito__contador { font-size: 0.85rem; color: var(--texto-suave); text-align: center; }
+/* CTA principal de venta: grande, full-width, verde WhatsApp con su ícono. */
 .carrito__enviar {
-  padding: 0.8rem 1.1rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.95rem 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: var(--fuente-titulo);
   color: #fff;
   background: #25d366;            /* verde WhatsApp */
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.32);
+  transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
-.carrito__enviar:disabled { background: #bfe6cd; cursor: not-allowed; }
+.carrito__enviar:hover { filter: brightness(1.03); }
+.carrito__enviar:active { transform: translateY(1px); }
+.carrito__enviar:disabled { background: #bfe6cd; box-shadow: none; cursor: not-allowed; }
+.carrito__enviar-icono { flex: 0 0 auto; }
+.carrito__reaseguro { font-size: 0.78rem; color: var(--texto-tenue); text-align: center; margin: 0; }
 
 /* ----- Form del cliente (campos opcionales del carrito) ----- */
 .carrito__form {
@@ -886,6 +979,7 @@ body.is-locked { overflow: hidden; }   /* frena el scroll de fondo con el modal 
   font-weight: 600;
 }
 .color-modal__title h3 {
+  font-family: var(--fuente-titulo);
   font-size: 1.15rem;
   font-weight: 700;
   margin: 0.1rem 0 0;
