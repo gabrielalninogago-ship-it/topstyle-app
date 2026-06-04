@@ -24,3 +24,9 @@ desktop.ini
 # Variables de entorno (no aplica hoy porque no hay backend, pero por las dudas)
 .env
 .env.local
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
