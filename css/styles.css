@@ -132,6 +132,62 @@ body {
 .btn-principal:hover { background: var(--plum-oscuro); }
 .btn-principal:active { transform: translateY(1px); }
 
+/* Bloque interno de Inicio (primera visita / ya estuvo). Sin gap propio para no
+   alterar el espaciado por márgenes que ya tenía la primera visita. */
+.inicio__bloque { width: 100%; }
+
+/* ----- Tarjetas de acceso rápido en Inicio (último pedido / frecuente) ----- */
+.tarjeta-pedido {
+  margin-top: 1rem;
+  padding: 1rem;
+  text-align: left;
+  background: #faf5f8;
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+}
+.tarjeta-pedido__titulo {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--plum);
+  margin: 0 0 0.35rem;
+}
+.tarjeta-pedido__resumen {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+  margin: 0 0 0.8rem;
+  line-height: 1.4;
+}
+.tarjeta-pedido__btn {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--plum);
+  background: #fff;
+  border: 1.5px solid var(--plum);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.tarjeta-pedido__btn:hover { background: var(--plum); color: #fff; }
+
+/* ----- Checkbox "guardar como frecuente" (form del carrito) ----- */
+.campo-check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.9rem;
+  color: var(--texto);
+  cursor: pointer;
+}
+.campo-check input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--plum);
+  flex-shrink: 0;
+}
+
 /* ----- Footer con links a PDFs (placeholders por ahora) ----- */
 .footer-pdfs {
   margin-top: 2rem;

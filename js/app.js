@@ -9,9 +9,10 @@
 // dato del cliente es el nombre, que ya vive en 'topstyle_nombre'.
 // 'pedido_frecuente' se implementa en el Paso 10 (necesita su checkbox y pantalla).
 const LS = {
-  nombre:  'topstyle_nombre',
-  carrito: 'topstyle_carrito_actual',
-  ultimos: 'topstyle_ultimos_pedidos',
+  nombre:    'topstyle_nombre',
+  carrito:   'topstyle_carrito_actual',
+  ultimos:   'topstyle_ultimos_pedidos',
+  frecuente: 'topstyle_pedido_frecuente',
 };
 
 document.addEventListener('alpine:init', () => {
@@ -26,12 +27,20 @@ document.addEventListener('alpine:init', () => {
     subActivo: 'todos',        // sub-tab dentro de Beauty Color
     busqueda: '',              // término del buscador
 
-    // --- Carrito (en memoria; la persistencia es el Paso 9) ---
+    // --- Carrito (persistido en localStorage, Paso 9) ---
     carrito: [],               // items: { id, qty, variant? }
     adicionales: '',           // textarea: productos fuera del catálogo (opcional)
     notas: '',                 // textarea: observaciones (opcional)
+    guardarFrecuente: false,   // checkbox del carrito: guardar como pedido frecuente
     toast: '',                 // mensaje efímero de feedback
     toastTimer: null,
+
+    // --- Inicio "ya estuvo antes" (Paso 10) ---
+    // Snapshot al cargar: define si mostramos la versión personalizada. No es
+    // reactivo al nombre en vivo, así tipearlo la primera vez no da vuelta la pantalla.
+    recurrente: false,
+    ultimoPedido: null,        // primer elemento de topstyle_ultimos_pedidos
+    pedidoFrecuente: null,     // topstyle_pedido_frecuente
 
     // Tabs principales (en orden). 'todos' es el primero.
     tabs: [
@@ -49,6 +58,11 @@ document.addEventListener('alpine:init', () => {
       // dispara una re-escritura innecesaria.
       this.nombre = this._leerLS(LS.nombre, '');
       this.carrito = this._leerLS(LS.carrito, []);
+
+      // Inicio "ya estuvo": leo último pedido y frecuente, y fijo el snapshot.
+      this.ultimoPedido = this._leerLS(LS.ultimos, [])[0] || null;
+      this.pedidoFrecuente = this._leerLS(LS.frecuente, null);
+      this.recurrente = !!this.nombre || !!this.ultimoPedido || !!this.pedidoFrecuente;
 
       // El nombre es un valor simple: lo persisto con un watcher.
       this.$watch('nombre', (v) => this._guardarLS(LS.nombre, v));
@@ -80,6 +94,47 @@ document.addEventListener('alpine:init', () => {
         localStorage.setItem(clave, JSON.stringify(valor));
       } catch (e) { /* storage no disponible: seguimos sin persistir */ }
     },
+
+    // --- Inicio "ya estuvo antes" (Paso 10) ---
+    get saludo() {
+      return this.nombre ? `Hola, ${this.nombre} 👋` : '¡Qué bueno verte de nuevo!';
+    },
+    // Resumen corto de un pedido para las tarjetas: primeros 3 items + "y N más".
+    resumenPedido(p) {
+      if (!p) return '';
+      const items = p.items || [];
+      if (items.length) {
+        const partes = items.slice(0, 3).map(i => {
+          const prod = this.productoPorId(i.id);
+          const nombre = prod ? prod.nombre : i.id;
+          const tono = i.variant ? ` (${i.variant.code})` : '';
+          return `${i.qty}× ${nombre}${tono}`;
+        });
+        const resto = items.length - 3;
+        let txt = partes.join(', ');
+        if (resto > 0) txt += `, y ${resto} más`;
+        return txt;
+      }
+      // Pedido sin productos del catálogo pero con texto libre.
+      return p.adicionales ? 'Productos adicionales' : 'Pedido vacío';
+    },
+    get resumenUltimo() { return this.resumenPedido(this.ultimoPedido); },
+    get resumenFrecuente() { return this.resumenPedido(this.pedidoFrecuente); },
+
+    // Carga un pedido guardado en el carrito y lleva a la Pantalla 3.
+    // conNotas: el último pedido trae sus notas; el frecuente no (es plantilla).
+    _cargarEnCarrito(p, conNotas) {
+      if (!p) return;
+      this.carrito = (p.items || []).map(i => (
+        i.variant ? { id: i.id, qty: i.qty, variant: i.variant } : { id: i.id, qty: i.qty }
+      ));
+      this.adicionales = p.adicionales || '';
+      this.notas = conNotas ? (p.notas || '') : '';
+      this._persistirCarrito();
+      this.pantalla = 'carrito';
+    },
+    cargarUltimo() { this._cargarEnCarrito(this.ultimoPedido, true); },
+    cargarFrecuente() { this._cargarEnCarrito(this.pedidoFrecuente, false); },
 
     // --- Selección de tabs ---
     seleccionarTab(key) {
@@ -230,8 +285,25 @@ document.addEventListener('alpine:init', () => {
       const texto = encodeURIComponent(this.construirMensaje());
       window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
       this._guardarHistorial();
+      if (this.guardarFrecuente) this._guardarFrecuente();  // antes de vaciar: lee el carrito
       this._vaciarPedido();
+      // Refresco el Inicio: ahora hay historial, así que pasa a modo "ya estuvo".
+      this.ultimoPedido = this._leerLS(LS.ultimos, [])[0] || null;
+      this.recurrente = true;
       this.pantalla = 'inicio';
+    },
+
+    // Guarda el carrito actual como pedido frecuente (plantilla: items +
+    // adicionales, sin notas ni fecha). Sobrescribe el anterior (PRD §5.3).
+    _guardarFrecuente() {
+      const frec = {
+        items: this.carrito.map(i => (
+          i.variant ? { id: i.id, qty: i.qty, variant: i.variant } : { id: i.id, qty: i.qty }
+        )),
+        adicionales: this.adicionales.trim(),
+      };
+      this._guardarLS(LS.frecuente, frec);
+      this.pedidoFrecuente = frec;  // refresca la tarjeta de Inicio
     },
 
     // Guarda el pedido recién enviado en 'últimos pedidos' (tope 5, el más nuevo
@@ -257,6 +329,7 @@ document.addEventListener('alpine:init', () => {
       this.carrito = [];
       this.adicionales = '';
       this.notas = '';
+      this.guardarFrecuente = false;
       this._persistirCarrito();
     },
 

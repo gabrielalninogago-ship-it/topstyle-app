@@ -34,19 +34,50 @@
            alt="TopStyle — Professional Hair Stylist Products" />
 
       <div class="inicio__centro">
-        <h1 class="inicio__saludo">Bienvenido a TopStyle</h1>
-        <p class="inicio__propuesta">Armá tu pedido en 2 minutos y mandánoslo listo por WhatsApp.</p>
 
-        <!-- Campo opcional de nombre. No persiste todavía (Paso 9). -->
-        <div class="campo-nombre">
-          <label class="campo-nombre__label" for="nombre">¿Cómo te llamamos?</label>
-          <input class="campo-nombre__input" id="nombre" type="text"
-                 x-model="nombre" placeholder="Tu nombre (opcional)" autocomplete="off" />
-        </div>
+        <!-- PRIMERA VISITA: sin nombre ni historial guardado -->
+        <template x-if="!recurrente">
+          <div class="inicio__bloque">
+            <h1 class="inicio__saludo">Bienvenido a TopStyle</h1>
+            <p class="inicio__propuesta">Armá tu pedido en 2 minutos y mandánoslo listo por WhatsApp.</p>
 
-        <button class="btn-principal" @click="pantalla = 'catalogo'">
-          Empezar pedido
-        </button>
+            <!-- Campo opcional de nombre. Persiste en localStorage (Paso 9). -->
+            <div class="campo-nombre">
+              <label class="campo-nombre__label" for="nombre">¿Cómo te llamamos?</label>
+              <input class="campo-nombre__input" id="nombre" type="text"
+                     x-model="nombre" placeholder="Tu nombre (opcional)" autocomplete="off" />
+            </div>
+
+            <button class="btn-principal" @click="pantalla = 'catalogo'">
+              Empezar pedido
+            </button>
+          </div>
+        </template>
+
+        <!-- YA ESTUVO ANTES: saludo personalizado + accesos rápidos (Paso 10) -->
+        <template x-if="recurrente">
+          <div class="inicio__bloque">
+            <h1 class="inicio__saludo" x-text="saludo"></h1>
+
+            <button class="btn-principal" @click="pantalla = 'catalogo'">
+              Nuevo pedido
+            </button>
+
+            <!-- Repetir el último pedido enviado -->
+            <div class="tarjeta-pedido" x-show="ultimoPedido" x-cloak>
+              <h2 class="tarjeta-pedido__titulo">Repetir tu último pedido</h2>
+              <p class="tarjeta-pedido__resumen" x-text="resumenUltimo"></p>
+              <button class="tarjeta-pedido__btn" @click="cargarUltimo()">Cargar y editar</button>
+            </div>
+
+            <!-- Pedido frecuente curado -->
+            <div class="tarjeta-pedido" x-show="pedidoFrecuente" x-cloak>
+              <h2 class="tarjeta-pedido__titulo">Tu pedido frecuente</h2>
+              <p class="tarjeta-pedido__resumen" x-text="resumenFrecuente"></p>
+              <button class="tarjeta-pedido__btn" @click="cargarFrecuente()">Cargar</button>
+            </div>
+          </div>
+        </template>
       </div>
 
       <!-- Footer: links a los PDFs (ya hospedados en el repo) -->
@@ -68,7 +99,7 @@
         </div>
       </footer>
 
-      <p class="version">Paso 9 · build 2026-06-03 persistencia</p>
+      <p class="version">Paso 10 · build 2026-06-04 inicio recurrente</p>
     </main>
   </div>
 
@@ -212,6 +243,12 @@
           <span class="campo__label">Notas / observaciones <em>(opcional)</em></span>
           <textarea class="campo__input" rows="2" x-model="notas"
             placeholder="¿Algo más? Forma de entrega, urgencia, etc."></textarea>
+        </label>
+
+        <!-- Guardar este pedido como frecuente (Paso 10) -->
+        <label class="campo-check">
+          <input type="checkbox" x-model="guardarFrecuente" />
+          <span>Guardar este pedido como mi pedido frecuente</span>
         </label>
       </div>
 
