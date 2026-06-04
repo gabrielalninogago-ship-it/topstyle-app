@@ -5,7 +5,7 @@ Rutina de cierre de sesión: grabar memorias, anotar acá el resumen, commit + p
 
 ---
 
-## Sesión 5 — 2026-06-04 (deploy confirmado + theme-color)
+## Sesión 5 — 2026-06-04 (deploy + WhatsApp prod + rediseño → V1 A TESTING)
 
 **Deploy DESTRABADO y confirmado.** El build del commit con `public/` anduvo
 (Gabb avisó + log). El log OK muestra "Read 97 files from .../public" (antes 145
@@ -29,8 +29,37 @@ si no toma el `theme_color` nuevo del manifest).
 `public/js/config.js`. SW `v14` → `v15` (config.js está en el CORE cacheado).
 Verificado en producción: sirve el número productivo y `topstyle-v15`.
 
-### Pendiente de Gabb
-- Logo liviano de Inicio; decisión de paleta (plum vs fucsia/oscuro); copy de Inicio.
+**Logo optimizado.** Gabb lo bajó con ImageMagick+pngquant: 648 KB → **56 KB**
+(400x400). El respaldo `topstyle-logo-original.png.bak` quedó fuera de `public/`
+(gitignored, no se deploya).
+
+**REDISEÑO orientado a conversión (3 pasadas).** Encargo de Gabb: "como experto en
+marketing/ventas, captar clientes y convertir". Público: profesionales del rubro.
+- Pass 1 (`fd73cb1`): solo acentos de gradiente. Quedó tímido ("no veo cambio").
+- Pass 2 — hero (`9b6d976`): hero superior con **gradiente de marca** (logo +
+  titular grande + CTA blanco de alto contraste + reaseguro "te responde una
+  persona, no un bot"); **fuente Poppins self-hosted** (woff2, queda offline);
+  **prueba social** (reseña cualitativa real, sin cifras inventadas); CTA de envío
+  del carrito grande con ícono de WhatsApp. Splash PWA a blanco. SW v17.
+- Pass 3 — cohesión (`6f82981`, `build rediseño cohesivo`, SW v18): Poppins también
+  en el TEXTO (pesos 400/500); **promos con gradiente de marca** (antes cajas
+  planas plum; `promos.json` de ejemplo con `color_fondo` vacío → toman el
+  gradiente); títulos de sección del catálogo con acento de gradiente; catálogo y
+  carrito con **fondo de tinte suave** (menos blanco plano).
+Todo verificado en producción con curl. Sistema de marca: gradiente
+plum→fucsia→coral (del ícono), variables `--grad-marca` / `--fuente-titulo` /
+`--fuente-base` en `styles.css`.
+
+**ESTADO: V1 lista para testing.** Gabb la deja así para testear; ajustes finos y
+cambios propuestos se ven DESPUÉS del test. Pendiente (no bloquea testing):
+colgarla de **topstyle.ar** y **topstyle.com.ar** cuando estén los DNS.
+
+### Pendiente de Gabb / próximo
+- Testear la V1 en uso real.
+- Post-test: juntar cambios a proponer.
+- DNS: apuntar **topstyle.ar** y **topstyle.com.ar** al Worker (custom domain en el
+  dash de Cloudflare; la app usa rutas relativas, no requiere cambios de código).
+- Assets viejos pendientes: fotos de los 27 Beauty Color + `is-equilibre-mascara`.
 
 ---
 
