@@ -10,6 +10,11 @@
       reales, maskable, apple-touch, favicons, `favicon.ico`, manifest nuevo.
 
 ## Pendiente de Gabb (assets / decisión)
+- [ ] **El fucsia de arriba NO queda bien** (Gabb, sesión 4). El `theme_color`
+      `#ff2ea0` del pack tiñe la barra del navegador/PWA de fucsia y choca con la
+      app violeta plum. Revertir el `<meta name="theme-color">` (y evaluar el
+      `theme_color` del manifest) a plum `#5a2a4d` o a un color que combine.
+      Archivos: `public/index.html` y `public/manifest.json`.
 - [ ] **Logo de Inicio:** `assets/topstyle-logo.png` pesa 648 KB y se muestra a
       130 px. Reemplazar por una versión liviana (~300 px o webp). Sin
       herramientas de imagen en la máquina → lo cambia Gabb o pasa el archivo.

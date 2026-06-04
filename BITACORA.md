@@ -5,6 +5,29 @@ Rutina de cierre de sesión: grabar memorias, anotar acá el resumen, commit + p
 
 ---
 
+## Sesión 4 — 2026-06-04 (deploy)
+
+Sesión dedicada a por qué la app no se actualizaba. **Hallazgo:** el deploy de
+Cloudflare venía fallando desde la migración. `npx wrangler deploy` subía desde
+la raíz e incluía `.git`; el pack del historial pesa 31.4 MiB y supera el límite
+de 25 MiB → `Asset too large` → deploy abortado → dominio NXDOMAIN. Gabb veía la
+PWA del Paso 12 servida desde caché (offline).
+
+**Fix pusheado:** sitio movido a `public/` + `wrangler.jsonc`
+(`assets.directory = "./public"`) para excluir `.git` del upload. (Un
+`.assetsignore` previo no fue respetado por wrangler.)
+
+**Sin cerrar:** el último deploy seguía fallando porque corrió sobre un commit
+viejo (probable "Retry" de un build anterior). Mañana: disparar deploy del último
+commit de `main` (push nuevo / "Create deployment" desde HEAD, NO "Retry") y
+confirmar la URL real en el log. Detalle en memoria [[deploy-cloudflare]].
+
+**Anotado:** el `theme_color` fucsia `#ff2ea0` del pack queda mal en la barra de
+arriba (choca con la app plum). Revertir a plum o color que combine
+(`public/index.html` + `public/manifest.json`). Ver PENDIENTES-PULIDO.
+
+---
+
 ## Sesión 2 — 2026-06-03
 
 ### Hecho
