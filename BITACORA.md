@@ -53,12 +53,34 @@ pedidos, pedido frecuente). Auto-relleno del nombre en Inicio/Carrito.
 - `cliente_data` (PRD §5) se descarta: el form ya no pide whatsapp/tipo/zona.
 - Cargar "último pedido" trae las notas; cargar "frecuente" no (es plantilla).
 
+- **Paso 11 — Promos.** `data/promos.json` editable (id, titulo, texto, imagen,
+  color_fondo, link, activa, valida_hasta). Hasta 2 banners en Inicio recurrente:
+  filtra activas y no vencidas. Color de texto auto según brillo del fondo.
+  Documentado cómo editarlas en el README. Las 2 promos actuales son de ejemplo.
+- **Paso 12 — PWA.** `manifest.json` + `sw.js` (cache-first del app shell +
+  fallback offline; Alpine cacheado aparte) + registro del SW en index.html.
+  Íconos placeholder generados con un encoder PNG mínimo (no había herramientas
+  de imagen).
+- **Paso 13 — Pulido + pack PWA.** Gabb pasó `topstyle-pwa-pack.zip` con íconos
+  reales (perfil "HAIR COSMETICS"), maskable, apple-touch, favicons, favicon.ico
+  y manifest nuevo (theme `#ff2ea0`, bg `#1a1a1a`). Integrado el head-snippet sin
+  duplicados; SW a `topstyle-v13` con los íconos nuevos. Pulido: fallback de
+  imágenes rotas (@error → placeholder), meta description, noscript, dims del logo.
+  **MVP completo (pasos 1-13).**
+
+### Decisiones de la sesión (cont.)
+- Promos solo para clientes recurrentes (PRD §4.1).
+- El pack PWA trae identidad fucsia/oscuro aplicada solo al chrome/PWA; la
+  paleta de la app (plum) se decide después ("lo vemos después").
+
 ### Pendiente de Gabb
-- Validar pasos 9 y 10 en el celu.
+- Validar pasos 9 a 13 en el celu.
+- Decidir paleta de la app (plum vs fucsia/oscuro del pack).
+- Pasar versión liviana del logo de Inicio (648 KB hoy).
 - Avisar cuándo pasar `WHATSAPP_NUMBER` al productivo `5491127395984`.
 
-### Próximo: Paso 11 — promos
-`promos.json` en el repo + hasta 2 banners en Inicio (PRD §6).
+### Próximo
+Validación final del MVP en mobile real. Post-MVP: paleta, logo, copy de Inicio.
 
 ---
 
