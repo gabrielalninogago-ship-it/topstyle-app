@@ -4,6 +4,16 @@
    Agregar al carrito sigue inerte (Paso 5/6).
    ========================================================= */
 
+// Claves de localStorage (PRD §5). Centralizadas para no repetir strings.
+// 'cliente_data' del PRD se descartó: con el form simplificado (Paso 8) el único
+// dato del cliente es el nombre, que ya vive en 'topstyle_nombre'.
+// 'pedido_frecuente' se implementa en el Paso 10 (necesita su checkbox y pantalla).
+const LS = {
+  nombre:  'topstyle_nombre',
+  carrito: 'topstyle_carrito_actual',
+  ultimos: 'topstyle_ultimos_pedidos',
+};
+
 document.addEventListener('alpine:init', () => {
   Alpine.data('app', () => ({
     // --- Estado general ---
@@ -33,8 +43,18 @@ document.addEventListener('alpine:init', () => {
       { key: 'beautycolor', label: 'Beauty Color' },
     ],
 
-    // Carga inicial del catálogo
+    // Carga inicial: catálogo + estado persistido en localStorage.
     async init() {
+      // Restauro lo guardado ANTES de prender los watchers, así cargar no
+      // dispara una re-escritura innecesaria.
+      this.nombre = this._leerLS(LS.nombre, '');
+      this.carrito = this._leerLS(LS.carrito, []);
+
+      // El nombre es un valor simple: lo persisto con un watcher.
+      this.$watch('nombre', (v) => this._guardarLS(LS.nombre, v));
+      // El carrito se persiste a mano en cada mutación (ver _persistirCarrito),
+      // para no depender de que el watcher detecte cambios profundos de cantidad.
+
       try {
         const resp = await fetch('data/catalogo.json');
         const data = await resp.json();
@@ -42,6 +62,23 @@ document.addEventListener('alpine:init', () => {
       } catch (e) {
         console.error('No se pudo cargar el catálogo:', e);
       }
+    },
+
+    // --- Persistencia (localStorage, PRD §5) ---
+    // Envuelven el acceso en try/catch: en incógnito o con storage bloqueado,
+    // la app no debe romperse, solo no recordar.
+    _leerLS(clave, fallback) {
+      try {
+        const v = localStorage.getItem(clave);
+        return v ? JSON.parse(v) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    },
+    _guardarLS(clave, valor) {
+      try {
+        localStorage.setItem(clave, JSON.stringify(valor));
+      } catch (e) { /* storage no disponible: seguimos sin persistir */ }
     },
 
     // --- Selección de tabs ---
@@ -62,7 +99,12 @@ document.addEventListener('alpine:init', () => {
       const existente = this._buscarItem(producto.id, code);
       if (existente) existente.qty += qty;
       else this.carrito.push(variant ? { id: producto.id, qty, variant } : { id: producto.id, qty });
+      this._persistirCarrito();
       if (!silencioso) this.mostrarToast(`${producto.nombre} agregado`);
+    },
+    // Guarda el carrito en localStorage. Se llama tras cada cambio.
+    _persistirCarrito() {
+      this._guardarLS(LS.carrito, this.carrito);
     },
     // Abre el modal de tono (módulo vanilla js/color-modal.js) y agrega al
     // carrito los tonos que el cliente elija. Pieza pegamento de REVISAR-2.
@@ -84,12 +126,14 @@ document.addEventListener('alpine:init', () => {
     },
     quitar(id, code = null) {
       this.carrito = this.carrito.filter(i => !(i.id === id && (i.variant ? i.variant.code : null) === code));
+      this._persistirCarrito();
     },
     cambiarCantidad(id, qty, code = null) {
       const item = this._buscarItem(id, code);
       if (!item) return;
-      if (qty <= 0) this.quitar(id, code);
-      else item.qty = qty;
+      if (qty <= 0) { this.quitar(id, code); return; }  // quitar ya persiste
+      item.qty = qty;
+      this._persistirCarrito();
     },
     get cantidadTotal() {
       return this.carrito.reduce((acc, i) => acc + i.qty, 0);
@@ -178,12 +222,42 @@ document.addEventListener('alpine:init', () => {
       return partes.join('\n');
     },
 
-    // Abre wa.me en una pestaña nueva con el mensaje ya codificado.
+    // Abre wa.me en una pestaña nueva con el mensaje ya codificado, guarda el
+    // pedido en el historial y deja el carrito vacío para el próximo.
     enviarWhatsApp() {
       if (!this.puedeEnviar) return;
       const numero = window.WHATSAPP_NUMBER;
       const texto = encodeURIComponent(this.construirMensaje());
       window.open(`https://wa.me/${numero}?text=${texto}`, '_blank');
+      this._guardarHistorial();
+      this._vaciarPedido();
+      this.pantalla = 'inicio';
+    },
+
+    // Guarda el pedido recién enviado en 'últimos pedidos' (tope 5, el más nuevo
+    // primero). Alimenta la tarjeta "Repetir último pedido" del Paso 10.
+    _guardarHistorial() {
+      const pedido = {
+        fecha: new Date().toISOString(),
+        items: this.carrito.map(i => (
+          i.variant ? { id: i.id, qty: i.qty, variant: i.variant } : { id: i.id, qty: i.qty }
+        )),
+        adicionales: this.adicionales.trim(),
+        notas: this.notas.trim(),
+      };
+      const ultimos = this._leerLS(LS.ultimos, []);
+      ultimos.unshift(pedido);
+      if (ultimos.length > 5) ultimos.length = 5;
+      this._guardarLS(LS.ultimos, ultimos);
+    },
+
+    // Vacía el carrito y los campos del form. El $watch del carrito persiste el
+    // array vacío, así al reabrir la app no reaparece el pedido ya enviado.
+    _vaciarPedido() {
+      this.carrito = [];
+      this.adicionales = '';
+      this.notas = '';
+      this._persistirCarrito();
     },
 
     // --- Toast (feedback efímero al agregar) ---
